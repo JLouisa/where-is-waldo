@@ -1,0 +1,65 @@
+Frontend:
+1. Create function to get x and y screen, window or image coordinates.
+2. Send variables to backend for processing
+
+Options:
+1. Sticky header
+2. Onscreen click to show menu of Options
+3. Show dotted circle on screen selection
+4. Transform to green circled checkmark if selection is correct
+5. Transform to red circled x-mark if selection is incorrect
+
+    1. Event handler
+        windows.eventhandler('/* Keyword onclick */', () => {
+            const locationXY = /* Coordinates */
+        })
+
+        function mouse_position()
+        {
+            var e = window.event;
+
+            var posX = e.clientX;
+            var posY = e.clientY;
+
+            document.Form1.posx.value = posX;
+            document.Form1.posy.value = posY;
+
+            var t = setTimeout(mouse_position,100);
+
+        }
+
+        <body onload="mouse_position()">
+        <form name="Form1">
+        POSX: <input type="text" name="posx"><br>
+        POSY: <input type="text" name="posy"><br>
+        </form>
+
+Correct:
+        (function() {
+            document.onmousemove = handleMouseMove;
+            function handleMouseMove(event) {
+                var eventDoc, doc, body;
+        
+                event = event || window.event; // IE-ism
+        
+                // If pageX/Y aren't available and clientX/Y are,
+                // calculate pageX/Y - logic taken from jQuery.
+                // (This is to support old IE)
+                if (event.pageX == null && event.clientX != null) {
+                    eventDoc = (event.target && event.target.ownerDocument) || document;
+                    doc = eventDoc.documentElement;
+                    body = eventDoc.body;
+        
+                    event.pageX = event.clientX +
+                      (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+                      (doc && doc.clientLeft || body && body.clientLeft || 0);
+                    event.pageY = event.clientY +
+                      (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
+                      (doc && doc.clientTop  || body && body.clientTop  || 0 );
+                }
+        
+                // Use event.pageX / event.pageY here
+            }
+        })();
+
+Backend:
