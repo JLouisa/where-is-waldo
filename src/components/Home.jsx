@@ -25,6 +25,7 @@ function Home() {
     marker.classList.add("icons");
     marker.style.position = "absolute";
 
+    // Map HTML Element
     const map = document.querySelector(".map");
     const rect = map.getBoundingClientRect();
     map.appendChild(marker);
