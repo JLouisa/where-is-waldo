@@ -103,7 +103,7 @@ h1 {
   grid-column: 3/4;
   justify-self: center;
   display: flex;
-  gap: 1em;
+  gap: 1.5em;
 }
 .menuLinks a {
   font-size: 1.5rem;
@@ -121,6 +121,11 @@ h1 {
 
 .rickMortyMap {
   width: 100%;
+  height: auto;
+}
+
+.selectionIcon {
+  width: 3rem;
   height: auto;
 }
 

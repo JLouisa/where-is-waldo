@@ -1,5 +1,6 @@
 Frontend:
-    1. Create function to get x and y screen, window or image coordinates.
+    1. ✔ Create function to get x and y screen, window or image coordinates.
+    1.1. Please a red circle on the marked coordinates
     2. Send variables to backend for processing
 
 Options:

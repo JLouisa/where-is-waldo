@@ -1,5 +1,5 @@
 // import logo from "../assets/logo.svg";
-import logo from "../../public/favicon.png";
+import logo from "/favicon.png";
 
 function Nav() {
   return (
