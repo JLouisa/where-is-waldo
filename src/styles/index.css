@@ -1,6 +1,6 @@
-/* :root {
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  /* line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
@@ -11,9 +11,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; */
 }
-
+/*
 a {
   font-weight: 500;
   color: #646cff;
@@ -95,7 +95,7 @@ nav h1 {
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .menuLinks {
@@ -104,6 +104,17 @@ h1 {
   justify-self: center;
   display: flex;
   gap: 1em;
+}
+.menuLinks a {
+  font-size: 1.5rem;
+  color: black;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.menuLinks a:hover {
+  text-decoration: underline;
 }
 
 /* ================Main================ */
