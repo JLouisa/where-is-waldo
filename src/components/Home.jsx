@@ -26,13 +26,10 @@ function Home() {
     marker.style.position = "absolute";
 
     const map = document.querySelector(".map");
-    if (map) {
-      map.appendChild(marker);
-      marker.style.left = arrPosXY[0] + "px";
-      marker.style.top = arrPosXY[1] + "px";
-    } else {
-      console.error("Map element not found");
-    }
+    const rect = map.getBoundingClientRect();
+    map.appendChild(marker);
+    marker.style.left = arrPosXY[0] - rect.x - 30 + "px";
+    marker.style.top = arrPosXY[1] - rect.y - 30 + "px";
   };
 
   return (
