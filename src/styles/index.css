@@ -152,13 +152,33 @@ h1 {
 }
 
 .icons {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
 }
 .icons {
   position: absolute;
   z-index: 999;
 }
+
+/* .selectIcon {
+  transition: transform ease;
+  animation: icon-spin infinite 20s linear;
+}
+
+@keyframes icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selectIcon {
+    animation: none;
+  }
+} */
 
 /*! ================Footer================ */
 footer {

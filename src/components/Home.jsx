@@ -1,7 +1,8 @@
 import map1 from "../assets/maps/rickAndMorty.png";
-import selectIcon from "../assets/dashed-circle.svg";
-import checkedIcon from "../assets/checkbox-circle.svg";
-import mistakeIcon from "../assets/mistake-circle.svg";
+import selectIcon from "../assets/markers/dashed-circle.svg";
+import checkedIcon from "../assets/markers/checkbox-circle.svg";
+import mistakeIcon from "../assets/markers/mistake-circle.svg";
+import loadingIcon from "../assets/markers/loading.svg";
 
 function Home() {
   document.addEventListener("DOMContentLoaded", () => {
@@ -17,20 +18,29 @@ function Home() {
     return [posX, posY];
   };
 
+  let checked = true;
+
   const placeMarkers = () => {
     const arrPosXY = handleMouseMove();
-
+    checked = !checked;
     const marker = document.createElement("img");
-    marker.src = checkedIcon;
-    marker.classList.add("icons");
+    marker.src = loadingIcon;
+    marker.classList.add("icons", "selectIcon");
     marker.style.position = "absolute";
 
     // Map HTML Element
     const map = document.querySelector(".map");
     const rect = map.getBoundingClientRect();
     map.appendChild(marker);
-    marker.style.left = arrPosXY[0] - rect.x - 30 + "px";
-    marker.style.top = arrPosXY[1] - rect.y - 30 + "px";
+    marker.style.left = arrPosXY[0] - rect.x - 40 + "px";
+    marker.style.top = arrPosXY[1] - rect.y - 40 + "px";
+    setTimeout(() => {
+      if (checked) {
+        marker.src = checkedIcon;
+      } else {
+        marker.src = mistakeIcon;
+      }
+    }, 2000);
   };
 
   return (
