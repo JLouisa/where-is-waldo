@@ -1,18 +1,23 @@
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import Home from "./components/Home";
+import { Outlet } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./styles/App.css";
 
-function App() {
+function App({ characterArr }) {
   return (
     <>
-      <Nav />
+      <Nav characterArr={characterArr} />
       <main>
-        <Home />
+        <Outlet />
       </main>
       <Footer />
     </>
   );
 }
+
+App.propTypes = {
+  characterArr: PropTypes.array,
+};
 
 export default App;

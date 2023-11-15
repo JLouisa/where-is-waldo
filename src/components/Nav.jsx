@@ -1,4 +1,6 @@
 import logo from "/favicon.png";
+import characterArr from "./fakeDB";
+// import PropTypes from "prop-types";
 
 function Nav() {
   return (
@@ -14,13 +16,22 @@ function Nav() {
       <div className="nav2">
         <img src={logo} alt="loupe icon" className="logoImage"></img>
         <h1>Where is Waldo Game</h1>
-        <div className="menuLinks">
+        <div className="charactersDiv">
+          {characterArr.map((character, index) => {
+            return <img key={index} src={character.url} className="characterImg"></img>;
+          })}
+        </div>
+        {/* <div className="menuLinks">
           <a href="">Leaderboard</a>
           <a href="">Game Rules</a>
-        </div>
+        </div> */}
       </div>
     </nav>
   );
 }
+
+// Nav.propTypes = {
+//   characterArr: PropTypes.array,
+// };
 
 export default Nav;

@@ -73,7 +73,7 @@ button:focus-visible {
 .nav1,
 .nav2 {
   min-height: 10%;
-  padding: 1em;
+  padding: 0.5em;
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -108,12 +108,13 @@ h1 {
   font-size: 2rem;
 }
 
-.menuLinks {
+.menuLinks,
+.charactersDiv {
   grid-row: 1/2;
   grid-column: 3/4;
   justify-self: center;
   display: flex;
-  gap: 1.5em;
+  gap: 2em;
 }
 
 .menuLinks a {
@@ -136,6 +137,11 @@ h1 {
   font-size: 1.8vw;
 }
 
+.characterImg {
+  height: 6rem;
+  width: auto;
+}
+
 /*! ================Main================ */
 
 /* main {
@@ -148,7 +154,6 @@ h1 {
 
 .rickMortyMap {
   width: 100%;
-  height: auto;
 }
 
 .icons {
