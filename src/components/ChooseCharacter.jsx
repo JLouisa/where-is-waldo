@@ -1,11 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import characterArr from "../database/fakeDB";
-import useGlobalStore from "../state/useGlobalStore";
+import useBearStore from "../state/useGlobalStore";
 
 function ChooseCharacter() {
   const [characters, setCharacters] = useState(characterArr);
-  const [showChoose, setShowChoose] = useState(false);
-  const { gameOver, setGameOver } = useGlobalStore();
+  //   const [showChoose, setShowChoose] = useState(false);
+  const { gameOver, setGameOver, showChoose, setShowChoose } = useBearStore();
   const scoreRef = useRef(0);
 
   const ChooseCharacterHandler = (index) => {
