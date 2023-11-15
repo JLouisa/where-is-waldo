@@ -1,5 +1,5 @@
 import logo from "/favicon.png";
-import characterArr from "../database/fakeDB";
+import characterArr from "../../database/fakeDB";
 // import PropTypes from "prop-types";
 
 function Nav() {

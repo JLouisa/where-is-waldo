@@ -1,4 +1,4 @@
-import gitHubIcon from "../assets/github-original.svg";
+import gitHubIcon from "../../assets/github-original.svg";
 
 function Footer() {
   return (

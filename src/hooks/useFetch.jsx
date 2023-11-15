@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import apiHost from "../config/host";
 
 function useFetch() {
