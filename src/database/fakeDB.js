@@ -4,22 +4,22 @@ import summerImg from "../assets/characters/summer.png";
 
 const beth = {
   name: "Beth Smith",
-  posX: [1210, 1160],
-  posY: [240, 400],
+  posX: [1530, 1600],
+  posY: [435, 750],
   url: bethImg,
 };
 
 const jerry = {
   name: "Jerry Smith",
-  posX: [850, 950],
-  posY: [200, 415],
+  posX: [1160, 1240],
+  posY: [250, 530],
   url: jerryImg,
 };
 
 const summer = {
   name: "Summer Smith",
-  posX: [320, 520],
-  posY: [1000, 1080],
+  posX: [1345, 1415],
+  posY: [740, 970],
   url: summerImg,
 };
 

@@ -22,6 +22,7 @@ function Home() {
     const e = window.event;
     const posX = e.clientX;
     const posY = e.clientY;
+    console.log(`PosX, PosY`);
     console.log(`PosX: ${posX}, PosY: ${posY}`);
     const posXY = [posX, posY, rect];
     return posXY;
@@ -48,13 +49,13 @@ function Home() {
   const ChooseCharacterHandler = (index) => {
     if (scoreRef.current < 3) {
       const newArr = [...characters];
-      sendToServer(characters[index]);
-      newArr.splice(index, 1);
-      setCharacters(newArr);
+      sendToServer(newArr[index], newArr, index);
+      // newArr.splice(index, 1);
+      // setCharacters(newArr);
     }
   };
 
-  const sendToServer = (item) => {
+  const sendToServer = (item, arr, index) => {
     console.log(`Server: ${item.name}, X:${item.posX}, Y:${item.posY}`);
     console.log(item.name, [posXY[0], posXY[1]]);
     const proccessed = proccessOnServer(item, posXY);
@@ -65,6 +66,8 @@ function Home() {
       const newArr = [...clickArr];
       newArr[clickArr.length - 1].icon = checkedIcon;
       setClickArr(newArr);
+      arr.splice(index, 1);
+      setCharacters(arr);
       scoreRef.current++;
     } else {
       console.log(`processed false`);
@@ -80,11 +83,11 @@ function Home() {
 
   const proccessOnServer = (item, posXY) => {
     const foundChar = characterArr.find((char) => {
-      char.name === item.name;
+      return char.name === item.name;
     });
     if (foundChar) {
       const correctX = posXY[0] >= foundChar.posX[0] && posXY[0] <= foundChar.posX[1];
-      const correctY = posXY[1] >= foundChar.posY[0] && posXY[0] <= foundChar.posY[1];
+      const correctY = posXY[1] >= foundChar.posY[0] && posXY[1] <= foundChar.posY[1];
       if (correctX && correctY) {
         return true;
       }
