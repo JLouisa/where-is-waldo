@@ -1,71 +1,18 @@
 import map1 from "../assets/maps/rickAndMorty.png";
-import ChooseCharacter from "../components/ChooseCharacter";
 import loadingIcon from "../assets/markers/loading.svg";
 import useBearStore from "../state/useGlobalStore";
-// import { useState } from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import characterArr from "../database/fakeDB";
-// import useBearStore from "../state/useGlobalStore";
 
 function Home() {
-  // const [clickOnMap, setClickOnMap] = useState([]);
+  // const [showChoose, setShowChoose] = useState(false);
+  const [characters, setCharacters] = useState(characterArr);
+  const { gameOver, setGameOver, showChoose, setShowChoose } = useBearStore();
+  const scoreRef = useRef(0);
+
   const [clickArr, setClickArr] = useState([]);
   const [posXY, setPosXY] = useState([]);
-  // const { gameOver, setGameOver, showChoose, setShowChoose } = useBearStore();
 
-  // // ==
-  // const [characters, setCharacters] = useState(characterArr);
-  // const scoreRef = useRef(0);
-
-  // const ChooseCharacterHandler = (index) => {
-  //   if (scoreRef.current < 3) {
-  //     const newArr = [...characters];
-  //     sendToServer(newArr[index]);
-  //     newArr.splice(index, 1);
-  //     setCharacters(newArr);
-  //     scoreRef.current++;
-  //   }
-  //   if (scoreRef.current >= 3) {
-  //     console.log("Game Over");
-  //     setGameOver(true);
-  //   }
-  // };
-
-  // const sendToServer = (item) => {
-  //   console.log(`${item.name} has been sent to the server`);
-  // };
-  // // ==
-
-  const getRect = () => {
-    const map = document.querySelector(".rickMortyMap");
-    const rect = map.getBoundingClientRect();
-    return rect;
-  };
-
-  const handleMouseClick = () => {
-    const e = window.event;
-    const posX = e.clientX;
-    const posY = e.clientY;
-    console.log(`PosX: ${posX}, PosY: ${posY}`);
-    const posXY = [posX, posY, getRect()];
-
-    const theMark = (
-      <img
-        className="icons selectIcon"
-        style={{
-          position: "absolute",
-          left: `${posXY[0] - posXY[2].x - 40}px`,
-          top: `${posXY[1] - posXY[2].y - 40}px`,
-        }}
-        src={loadingIcon}
-        alt="Marker"
-      />
-    );
-    posXY, setPosXY;
-    setClickArr([...clickArr, theMark]);
-  };
-
-  //! New Code
   const getPosXY = () => {
     const map = document.querySelector(".rickMortyMap");
     const rect = map.getBoundingClientRect();
@@ -83,6 +30,24 @@ function Home() {
     setClickArr([...clickArr, markXY]);
   };
 
+  const ChooseCharacterHandler = (index) => {
+    if (scoreRef.current < 3) {
+      const newArr = [...characters];
+      sendToServer(newArr[index]);
+      newArr.splice(index, 1);
+      setCharacters(newArr);
+      scoreRef.current++;
+    }
+    if (scoreRef.current >= 3) {
+      console.log("Game Over");
+      setGameOver(true);
+    }
+  };
+
+  const sendToServer = (item) => {
+    console.log(`${item.name} has been sent to the server`);
+  };
+
   return (
     <section>
       <div className="mapContainer">
@@ -92,7 +57,6 @@ function Home() {
           className="rickMortyMap"
           onClick={() => {
             addMark();
-            // handleMouseClick();
           }}
         />
         {clickArr.map((click, index) => {
@@ -111,14 +75,27 @@ function Home() {
         })}
         {posXY.length > 0 && (
           <div
-            className="menuDiv"
+            className="chooseDiv"
             style={{
               position: "absolute",
               left: `${posXY[0] + 80 - 40}px`,
               top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
             }}
           >
-            Menu
+            {characters.map((character, index) => {
+              return (
+                <div
+                  className="characterDiv"
+                  key={index + character.name}
+                  onClick={() => {
+                    ChooseCharacterHandler(index);
+                  }}
+                >
+                  <img src={character.url} alt={character.name} className="chooseCharacter" />
+                  <span>{character.name}</span>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
