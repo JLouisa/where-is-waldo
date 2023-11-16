@@ -5,6 +5,8 @@ const useGlobalStore = create((set) => ({
   setGameOver: (gameOver) => set({ gameOver }),
   showChoose: false,
   setShowChoose: (showChoose) => set({ showChoose }),
+  isRunning: false,
+  setIsRunning: (isRunning) => set({ isRunning }),
 }));
 
 export default useGlobalStore;

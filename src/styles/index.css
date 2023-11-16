@@ -117,6 +117,12 @@ h1 {
   grid-column: 3/4;
   justify-self: center;
   display: flex;
+}
+
+.charactersDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2em;
 }
 

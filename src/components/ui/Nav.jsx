@@ -1,5 +1,6 @@
 import logo from "/favicon.png";
 import characterArr from "../../database/fakeDB";
+import Stopwatch from "../stopwatch";
 // import PropTypes from "prop-types";
 
 function Nav() {
@@ -17,6 +18,9 @@ function Nav() {
         <img src={logo} alt="loupe icon" className="logoImage"></img>
         <h1>Where is Waldo Game</h1>
         <div className="charactersDiv">
+          <Stopwatch />
+          {/* </div>
+          <div> */}
           {characterArr.map((character, index) => {
             return <img key={index} src={character.url} className="characterImg"></img>;
           })}

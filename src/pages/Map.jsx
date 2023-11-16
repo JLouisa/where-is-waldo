@@ -2,8 +2,9 @@ import map1 from "../assets/maps/rickAndMorty.png";
 import loadingIcon from "../assets/markers/loading.svg";
 import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import characterArr from "../database/fakeDB";
+import useGlobalStore from "../state/useGlobalStore";
 
 function Home() {
   const [characters, setCharacters] = useState(characterArr);
@@ -13,6 +14,15 @@ function Home() {
   const [posXY, setPosXY] = useState([]);
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
+
+  // Global States
+  const { isRunning, setIsRunning } = useGlobalStore();
+
+  useEffect(() => {
+    if (isRunning === false) {
+      setIsRunning(true);
+    }
+  }, []);
 
   console.log(clickArr);
 
@@ -50,8 +60,6 @@ function Home() {
     if (scoreRef.current < 3) {
       const newArr = [...characters];
       sendToServer(newArr[index], newArr, index);
-      // newArr.splice(index, 1);
-      // setCharacters(newArr);
     }
   };
 
@@ -124,7 +132,10 @@ function Home() {
     }
   };
 
-  if (gameOver) return <p>Game Over</p>;
+  if (gameOver) {
+    setIsRunning(false);
+    return <p>Game Over</p>;
+  }
 
   return (
     <section>
