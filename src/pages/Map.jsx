@@ -1,5 +1,7 @@
 import map1 from "../assets/maps/rickAndMorty.png";
 import loadingIcon from "../assets/markers/loading.svg";
+import checkedIcon from "../assets/markers/checkbox-circle.svg";
+import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef } from "react";
 import characterArr from "../database/fakeDB";
 
@@ -11,6 +13,8 @@ function Home() {
   const [posXY, setPosXY] = useState([]);
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
+
+  console.log(clickArr);
 
   const getPosXY = () => {
     const map = document.querySelector(".rickMortyMap");
@@ -25,8 +29,12 @@ function Home() {
 
   const addMark = () => {
     const markXY = getPosXY();
+    const obj = {
+      markXY: markXY,
+      icon: loadingIcon,
+    };
     setPosXY(markXY);
-    setClickArr([...clickArr, markXY]);
+    setClickArr([...clickArr, obj]);
   };
 
   const cancelAddMark = () => {
@@ -40,10 +48,29 @@ function Home() {
   const ChooseCharacterHandler = (index) => {
     if (scoreRef.current < 3) {
       const newArr = [...characters];
-      sendToServer(newArr[index]);
+      sendToServer(characters[index]);
       newArr.splice(index, 1);
       setCharacters(newArr);
+    }
+  };
+
+  const sendToServer = (item) => {
+    console.log(`Server: ${item.name}, X:${item.posX}, Y:${item.posY}`);
+    console.log(item.name, [posXY[0], posXY[1]]);
+    const proccessed = proccessOnServer(item, posXY);
+    console.log(`proccessed`);
+    console.log(proccessed);
+    if (proccessed) {
+      console.log(`processed true`);
+      const newArr = [...clickArr];
+      newArr[clickArr.length - 1].icon = checkedIcon;
+      setClickArr(newArr);
       scoreRef.current++;
+    } else {
+      console.log(`processed false`);
+      const newArr = [...clickArr];
+      newArr[clickArr.length - 1].icon = mistakeIcon;
+      setClickArr(newArr);
     }
     if (scoreRef.current >= 3) {
       console.log("Game Over");
@@ -51,8 +78,19 @@ function Home() {
     }
   };
 
-  const sendToServer = (item) => {
-    console.log(`${item.name} has been sent to the server`);
+  const proccessOnServer = (item, posXY) => {
+    const foundChar = characterArr.find((char) => {
+      char.name === item.name;
+    });
+    if (foundChar) {
+      const correctX = posXY[0] >= foundChar.posX[0] && posXY[0] <= foundChar.posX[1];
+      const correctY = posXY[1] >= foundChar.posY[0] && posXY[0] <= foundChar.posY[1];
+      if (correctX && correctY) {
+        return true;
+      }
+      return false;
+    }
+    return false;
   };
 
   //! Game Controller
@@ -104,10 +142,10 @@ function Home() {
             className="icons"
             style={{
               position: "absolute",
-              left: `${click[0] - click[2].x - 40}px`,
-              top: `${click[1] - click[2].y - 40}px`,
+              left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
+              top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
             }}
-            src={loadingIcon}
+            src={click.icon}
           />
         ))}
         {showMenu && posXY.length > 0 && (
