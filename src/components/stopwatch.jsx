@@ -2,18 +2,18 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../styles/stopwatch.css";
 
-const Stopwatch = ({ isRunning }) => {
+const Stopwatch = ({ isRunning, state, dispatch }) => {
   // state to store time
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     let intervalId;
-    if (isRunning) {
+    if (state.isRunning) {
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
     }
     return () => clearInterval(intervalId);
-  }, [isRunning, time]);
+  }, [state.isRunning, time]);
 
   // Hours calculation
   const hours = Math.floor(time / 360000);
@@ -40,6 +40,8 @@ const Stopwatch = ({ isRunning }) => {
 Stopwatch.propTypes = {
   isRunning: PropTypes.bool,
   setIsRunning: PropTypes.func,
+  state: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 export default Stopwatch;

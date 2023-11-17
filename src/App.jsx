@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./styles/App.css";
 
-function App({ isRunning }) {
+function App({ state, dispatch }) {
   return (
     <>
-      <Nav isRunning={isRunning} />
+      <Nav state={state} dispatch={dispatch} />
       <main>
         <Outlet />
       </main>
@@ -17,7 +17,8 @@ function App({ isRunning }) {
 }
 
 App.propTypes = {
-  isRunning: PropTypes.bool,
+  state: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 export default App;

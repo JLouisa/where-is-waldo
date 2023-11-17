@@ -23,6 +23,39 @@ const summer = {
   url: summerImg,
 };
 
+export const leaderboardArr = [
+  {
+    _id: 1,
+    name: "John",
+    score: "100",
+    date: Date.now(),
+  },
+  {
+    _id: 2,
+    name: "Jane",
+    score: "110",
+    date: Date.now(),
+  },
+  {
+    _id: 3,
+    name: "Adam",
+    score: "115",
+    date: Date.now(),
+  },
+  {
+    _id: 4,
+    name: "Eve",
+    score: "200",
+    date: Date.now(),
+  },
+  {
+    _id: 5,
+    name: "Jay",
+    score: "210",
+    date: Date.now(),
+  },
+];
+
 const characterArr = [beth, jerry, summer];
 
 export default characterArr;

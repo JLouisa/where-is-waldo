@@ -3,10 +3,13 @@ import loadingIcon from "../assets/markers/loading.svg";
 import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import characterArr from "../database/fakeDB";
+import { ACTION } from "../state/reducer";
 import PropTypes from "prop-types";
 
-function Map({ isRunning, setIsRunning }) {
+function Map({ state, dispatch }) {
+  const navigateTo = useNavigate();
   const [characters, setCharacters] = useState(characterArr);
   const [gameOver, setGameOver] = useState(false);
   const [clickArr, setClickArr] = useState([]);
@@ -16,8 +19,9 @@ function Map({ isRunning, setIsRunning }) {
   const scoreRef = useRef(0);
 
   useEffect(() => {
-    if (isRunning === false) {
-      setIsRunning(true);
+    if (state.isRunning === false) {
+      // setIsRunning(true);
+      dispatch({ type: ACTION.STOPWATCH_START });
     }
   }, []);
 
@@ -82,8 +86,9 @@ function Map({ isRunning, setIsRunning }) {
     }
     if (scoreRef.current >= 3) {
       console.log("Game Over");
+      dispatch({ type: ACTION.STOPWATCH_STOP });
       setGameOver(true);
-      setIsRunning(false);
+      navigateTo("/leaderboard");
     }
   };
 
@@ -131,7 +136,7 @@ function Map({ isRunning, setIsRunning }) {
   };
 
   if (gameOver) {
-    return <p>Game Over</p>;
+    //
   }
 
   return (
@@ -193,6 +198,8 @@ function Map({ isRunning, setIsRunning }) {
 Map.propTypes = {
   isRunning: PropTypes.bool,
   setIsRunning: PropTypes.func,
+  state: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 export default Map;

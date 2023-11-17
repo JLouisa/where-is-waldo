@@ -12,9 +12,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%; */
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
 }
 /*
 a {
@@ -41,7 +38,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -54,7 +51,8 @@ button {
 }
 button:hover {
   border-color: #646cff;
-}
+} */
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -73,6 +71,11 @@ button:focus-visible {
   }
 } */
 /*! ================Nav================ */
+
+.nav1 {
+  visibility: hidden;
+}
+
 .nav1,
 .nav2 {
   min-height: 8%;
@@ -92,9 +95,11 @@ button:focus-visible {
   width: 100%;
   z-index: 1000;
   background-color: white;
+  border-bottom: 2px solid black;
 }
 
-.logoImage {
+/* .logoImage, */
+#logoHome {
   grid-row: 1/2;
   grid-column: 1/2;
   justify-self: center;
@@ -126,7 +131,7 @@ button:focus-visible {
   font-size: 1.5rem;
   color: black;
   text-decoration: none;
-  pointer-events: none;
+  /* pointer-events: none; */
   cursor: default;
 }
 .menuLinks a:hover {
@@ -149,9 +154,25 @@ h1 {
 
 /*! ================Main================ */
 
-/* main {
-  margin-top: 9rem;
-} */
+.mapChooseDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 2em;
+}
+.mapCardIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.mapIcons {
+  height: 20rem;
+  width: auto;
+}
 
 .map {
   position: relative;
@@ -231,6 +252,22 @@ h1 {
   align-items: center;
 }
 
+/* =================Leaderboard================= */
+.leaderboardInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.playerCards {
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 0.5em;
+  margin: 1em;
+  padding: 1em 2em;
+}
+
 /*! ================Footer================ */
 footer {
   padding: 1em;
@@ -241,3 +278,29 @@ footer {
   align-items: center;
   gap: 1.5em;
 }
+
+/* =======Misc========= */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0.2em;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* body {
+  -webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;
+} */
