@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import useGlobalStore from "../state/useGlobalStore";
+// import useGlobalStore from "../state/useGlobalStore";
+import PropTypes from "prop-types";
 import "../styles/stopwatch.css";
 
-const Stopwatch = () => {
+const Stopwatch = ({ isRunning, setIsRunning }) => {
   // state to store time
   const [time, setTime] = useState(0);
 
   // state to check stopwatch running or not
   // const [isRunning, setIsRunning] = useState(false);
-  const { isRunning, setIsRunning } = useGlobalStore();
+  // const { isRunning, setIsRunning } = useGlobalStore();
 
   useEffect(() => {
     let intervalId;
@@ -52,10 +53,15 @@ const Stopwatch = () => {
         </button>
         <button className="stopwatch-button" onClick={reset}>
           Reset
-        </button> */}
-      {/* </div> */}
+        </button>
+      </div> */}
     </div>
   );
+};
+
+Stopwatch.propTypes = {
+  isRunning: PropTypes.bool,
+  setIsRunning: PropTypes.func,
 };
 
 export default Stopwatch;

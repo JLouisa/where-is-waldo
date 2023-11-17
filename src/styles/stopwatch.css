@@ -4,7 +4,7 @@
 
 .stopwatch-time {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .stopwatch-buttons {
@@ -13,9 +13,9 @@
 }
 
 .stopwatch-buttons button {
-  margin: 1em;
+  /* margin: 1em; */
   border: none;
-  padding: 10px 30px;
+  /* padding: 10px 30px; */
   cursor: pointer;
   color: #fff;
 }

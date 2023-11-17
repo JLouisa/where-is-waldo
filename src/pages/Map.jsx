@@ -4,9 +4,10 @@ import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
 import characterArr from "../database/fakeDB";
-import useGlobalStore from "../state/useGlobalStore";
+// import useGlobalStore from "../state/useGlobalStore";
+import PropTypes from "prop-types";
 
-function Home() {
+function Map({ isRunning, setIsRunning }) {
   const [characters, setCharacters] = useState(characterArr);
   const [gameOver, setGameOver] = useState(false);
   const [clickArr, setClickArr] = useState([]);
@@ -16,7 +17,7 @@ function Home() {
   const scoreRef = useRef(0);
 
   // Global States
-  const { isRunning, setIsRunning } = useGlobalStore();
+  // const { isRunning, setIsRunning } = useGlobalStore();
 
   useEffect(() => {
     if (isRunning === false) {
@@ -86,6 +87,7 @@ function Home() {
     if (scoreRef.current >= 3) {
       console.log("Game Over");
       setGameOver(true);
+      setIsRunning(false);
     }
   };
 
@@ -133,7 +135,6 @@ function Home() {
   };
 
   if (gameOver) {
-    setIsRunning(false);
     return <p>Game Over</p>;
   }
 
@@ -193,4 +194,9 @@ function Home() {
   );
 }
 
-export default Home;
+Map.propTypes = {
+  isRunning: PropTypes.bool,
+  setIsRunning: PropTypes.func,
+};
+
+export default Map;

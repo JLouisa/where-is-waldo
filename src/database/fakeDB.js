@@ -19,7 +19,7 @@ const jerry = {
 const summer = {
   name: "Summer Smith",
   posX: [1345, 1415],
-  posY: [740, 970],
+  posY: [515, 1040],
   url: summerImg,
 };
 

@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./styles/App.css";
 
-function App({ characterArr }) {
+function App({ isRunning, setIsRunning }) {
   return (
     <>
-      <Nav characterArr={characterArr} />
+      <Nav isRunning={isRunning} setIsRunning={setIsRunning} />
       <main>
         <Outlet />
       </main>
@@ -17,7 +17,8 @@ function App({ characterArr }) {
 }
 
 App.propTypes = {
-  characterArr: PropTypes.array,
+  isRunning: PropTypes.bool,
+  setIsRunning: PropTypes.func,
 };
 
 export default App;
