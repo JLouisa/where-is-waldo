@@ -20,7 +20,7 @@ const Router = () => {
         { path: "", element: <Navigate to="/home" /> },
         { path: "/home", element: <Home state={state} dispatch={dispatch} /> },
         { path: "/map", element: <Map state={state} dispatch={dispatch} /> },
-        { path: "/score-form", element: <ScoreForm state={state} /> },
+        { path: "/score-form", element: <ScoreForm /> },
         { path: "/leaderboard", element: <Leaderboard /> },
         { path: "/game-rules", element: <GameRules /> },
         { path: "/test", element: <TestPage /> },

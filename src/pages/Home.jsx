@@ -3,24 +3,30 @@ import PropTypes from "prop-types";
 import rickMortyIcon from "../assets/rickAndMorty.png";
 import pokemonIcon from "../assets/pokeball.png";
 import disneyIcon from "../assets/disney.png";
-import useGlobalStore from "../state/useGlobalStore";
 import { ACTION } from "../state/reducer";
+import { Stopwatch } from "../utils/stopwatch";
 
 function Home({ /*state,*/ dispatch }) {
-  const { rickMortyGame, setRickMortyGame } = useGlobalStore();
-
-  const startTheGameRM = () => {
+  const startTheGame = (map) => {
     dispatch({ type: ACTION.startGame });
-    setRickMortyGame(true);
+    dispatch({ type: map });
+    const theStopWatch = Stopwatch();
+    theStopWatch.startStop();
   };
 
   return (
-    <>
+    <div className="theChoiceMain">
       <div className="mapChooseDiv">
         <div className="mapCardIcons">
           <img src={disneyIcon} alt="Disney icon" className="mapIcons"></img>
           <Link to="/map">
-            <button className="btn" onClick={startTheGameRM}>
+            {/*Needs to change*/}
+            <button
+              className="btn"
+              onClick={() => {
+                startTheGame(ACTION.GAMERM);
+              }}
+            >
               Play
             </button>
           </Link>
@@ -28,7 +34,13 @@ function Home({ /*state,*/ dispatch }) {
         <div className="mapCardIcons">
           <img src={pokemonIcon} alt="Pokemon icon" className="mapIcons"></img>
           <Link to="/map">
-            <button className="btn" onClick={startTheGameRM}>
+            {/*Needs to change*/}
+            <button
+              className="btn"
+              onClick={() => {
+                startTheGame(ACTION.GAMERM);
+              }}
+            >
               Play
             </button>
           </Link>
@@ -36,13 +48,18 @@ function Home({ /*state,*/ dispatch }) {
         <div className="mapCardIcons">
           <img src={rickMortyIcon} alt="Rick and Morty black icon" className="mapIcons"></img>
           <Link to="/map">
-            <button className="btn" onClick={startTheGameRM}>
+            <button
+              className="btn"
+              onClick={() => {
+                startTheGame(ACTION.GAMERM);
+              }}
+            >
               Play
             </button>
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

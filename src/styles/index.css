@@ -158,6 +158,12 @@ main {
   min-height: 70vh;
 }
 
+.theChoiceMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mapChooseDiv {
   display: flex;
   justify-content: center;
@@ -258,35 +264,6 @@ main {
 }
 
 /* =================Leaderboard================= */
-.scorePage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-/* Basic Input Style */
-input {
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  font-size: 16px;
-}
-
-/* Hover and Focus Styles */
-input:hover,
-input:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-}
-
-/* Placeholder Text Style */
-input::placeholder {
-  color: #999;
-}
-
 .leaderboardInfo {
   display: flex;
   flex-direction: column;

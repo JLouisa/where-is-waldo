@@ -6,9 +6,11 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import characterArr from "../database/fakeDB";
 import { ACTION } from "../state/reducer";
+import { Stopwatch } from "../utils/stopwatch";
 import PropTypes from "prop-types";
 
 function Map({ state, dispatch }) {
+  const theStopWatch = Stopwatch();
   const navigateTo = useNavigate();
   const [characters, setCharacters] = useState(characterArr);
   const [gameOver, setGameOver] = useState(false);
@@ -23,6 +25,11 @@ function Map({ state, dispatch }) {
       dispatch({ type: ACTION.STOPWATCH_START });
     }
   }, []);
+
+  useEffect(() => {
+    if (gameOver) navigateTo("/score-form");
+    return () => setGameOver(false);
+  }, [gameOver, navigateTo]);
 
   console.log(clickArr);
 
@@ -86,8 +93,10 @@ function Map({ state, dispatch }) {
     if (scoreRef.current >= 3) {
       console.log("Game Over");
       dispatch({ type: ACTION.STOPWATCH_STOP });
-      setGameOver(true);
-      navigateTo("/score-form");
+      theStopWatch.startStop();
+      setTimeout(() => {
+        setGameOver(true);
+      }, 750);
     }
   };
 
@@ -134,13 +143,26 @@ function Map({ state, dispatch }) {
     }
   };
 
-  if (gameOver) {
-    //
-  }
+  const calculateIconStyle = (click) => {
+    return {
+      position: "absolute",
+      left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
+      top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
+    };
+  };
+
+  const calculateMenuStyle = () => {
+    return {
+      position: "absolute",
+      left: `${posXY[0] + 80 - 40}px`,
+      top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
+    };
+  };
 
   return (
     <section>
-      <div className="mapContainer">
+      <figure className="mapContainer">
+        {/* Map */}
         <img
           src={map1}
           alt="Rick and more find crowd"
@@ -150,46 +172,28 @@ function Map({ state, dispatch }) {
             gameController();
           }}
         />
-        {/* Click on map */}
+        {/* Clicked Icons */}
         {clickArr.map((click, index) => (
-          <img
-            key={index}
-            className="icons"
-            style={{
-              position: "absolute",
-              left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
-              top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
-            }}
-            src={click.icon}
-          />
+          <img key={index} className="icons" style={calculateIconStyle(click)} src={click.icon} />
         ))}
+        {/* Character Menu */}
         {showMenu && posXY.length > 0 && (
-          <div
-            className="chooseDiv"
-            style={{
-              position: "absolute",
-              left: `${posXY[0] + 80 - 40}px`,
-              top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
-            }}
-          >
-            {/* Choose Character Menu */}
-            {characters.map((character, index) => {
-              return (
-                <div
-                  className="characterDiv"
-                  key={index + character.name}
-                  onClick={() => {
-                    gameController(index);
-                  }}
-                >
-                  <img src={character.url} alt={character.name} className="chooseCharacter" />
-                  <span>{character.name}</span>
-                </div>
-              );
-            })}
-          </div>
+          <figcaption className="chooseDiv" style={calculateMenuStyle()}>
+            {characters.map((character, index) => (
+              <div
+                className="characterDiv"
+                key={index + character.name}
+                onClick={() => {
+                  gameController(index);
+                }}
+              >
+                <img src={character.url} alt={character.name} className="chooseCharacter" />
+                <span>{character.name}</span>
+              </div>
+            ))}
+          </figcaption>
         )}
-      </div>
+      </figure>
     </section>
   );
 }
@@ -202,3 +206,14 @@ Map.propTypes = {
 };
 
 export default Map;
+
+// Here's a simple example using percentage coordinates:
+// const handleMouseClick = (event) => {
+//   const container = document.querySelector('.map');
+//   const rect = container.getBoundingClientRect();
+
+//   const posXpct = ((event.clientX - rect.x) / rect.width) * 100;
+//   const posYpct = ((event.clientY - rect.y) / rect.height) * 100;
+
+//   // Your logic using percentage coordinates
+// };
