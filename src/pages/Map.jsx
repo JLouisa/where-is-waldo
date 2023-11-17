@@ -20,7 +20,6 @@ function Map({ state, dispatch }) {
 
   useEffect(() => {
     if (state.isRunning === false) {
-      // setIsRunning(true);
       dispatch({ type: ACTION.STOPWATCH_START });
     }
   }, []);
@@ -88,7 +87,7 @@ function Map({ state, dispatch }) {
       console.log("Game Over");
       dispatch({ type: ACTION.STOPWATCH_STOP });
       setGameOver(true);
-      navigateTo("/leaderboard");
+      navigateTo("/score-form");
     }
   };
 

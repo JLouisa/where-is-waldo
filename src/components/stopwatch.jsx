@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import "../styles/stopwatch.css";
+import { ACTION } from "../state/reducer";
 
-const Stopwatch = ({ isRunning, state, dispatch }) => {
-  // state to store time
-  const [time, setTime] = useState(0);
+const Stopwatch = ({ state, dispatch }) => {
+  // const [state.time, setTime] = useState(0);
 
   useEffect(() => {
     let intervalId;
     if (state.isRunning) {
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
-      intervalId = setInterval(() => setTime(time + 1), 10);
+      intervalId = setInterval(() => dispatch({ type: ACTION.TIME }), 10);
     }
     return () => clearInterval(intervalId);
-  }, [state.isRunning, time]);
+  }, [state.isRunning, state.time, dispatch]);
 
   // Hours calculation
-  const hours = Math.floor(time / 360000);
+  const hours = Math.floor(state.time / 360000);
 
   // Minutes calculation
-  const minutes = Math.floor((time % 360000) / 6000);
+  const minutes = Math.floor((state.time % 360000) / 6000);
 
   // Seconds calculation
-  const seconds = Math.floor((time % 6000) / 100);
+  const seconds = Math.floor((state.time % 6000) / 100);
 
   // Milliseconds calculation
-  const milliseconds = time % 100;
+  const milliseconds = state.time % 100;
 
   return (
     <div className="stopwatch-container">
