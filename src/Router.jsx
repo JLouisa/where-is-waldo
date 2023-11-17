@@ -9,8 +9,6 @@ import Leaderboard from "./pages/Leaderboard.jsx";
 import TestPage from "./pages/TestPage.jsx";
 import { useState } from "react";
 
-// import useBearStore from "./useBearStore";
-
 const Router = () => {
   const [isRunning, setIsRunning] = useState(false);
   const characterArr = [beth, jerry, summer];
@@ -18,7 +16,7 @@ const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App characterArr={characterArr} isRunning={isRunning} setIsRunning={setIsRunning} />,
+      element: <App characterArr={characterArr} isRunning={isRunning} />,
       children: [
         { path: "", element: <Navigate to="/map" /> },
         { path: "/test", element: <TestPage /> },

@@ -4,7 +4,6 @@ import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
 import characterArr from "../database/fakeDB";
-// import useGlobalStore from "../state/useGlobalStore";
 import PropTypes from "prop-types";
 
 function Map({ isRunning, setIsRunning }) {
@@ -15,9 +14,6 @@ function Map({ isRunning, setIsRunning }) {
   const [posXY, setPosXY] = useState([]);
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
-
-  // Global States
-  // const { isRunning, setIsRunning } = useGlobalStore();
 
   useEffect(() => {
     if (isRunning === false) {

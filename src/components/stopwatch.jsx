@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
-// import useGlobalStore from "../state/useGlobalStore";
 import PropTypes from "prop-types";
 import "../styles/stopwatch.css";
 
-const Stopwatch = ({ isRunning, setIsRunning }) => {
+const Stopwatch = ({ isRunning }) => {
   // state to store time
   const [time, setTime] = useState(0);
-
-  // state to check stopwatch running or not
-  // const [isRunning, setIsRunning] = useState(false);
-  // const { isRunning, setIsRunning } = useGlobalStore();
 
   useEffect(() => {
     let intervalId;
@@ -32,29 +27,12 @@ const Stopwatch = ({ isRunning, setIsRunning }) => {
   // Milliseconds calculation
   const milliseconds = time % 100;
 
-  // Method to start and stop timer
-  const startAndStop = () => {
-    setIsRunning(!isRunning);
-  };
-
-  // Method to reset timer back to 0
-  const reset = () => {
-    setTime(0);
-  };
   return (
     <div className="stopwatch-container">
       <p className="stopwatch-time">
         {hours}:{minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}:
         {milliseconds.toString().padStart(2, "0")}
       </p>
-      {/* <div className="stopwatch-buttons">
-        <button className="stopwatch-button" onClick={startAndStop}>
-          {isRunning ? "Stop" : "Start"}
-        </button>
-        <button className="stopwatch-button" onClick={reset}>
-          Reset
-        </button>
-      </div> */}
     </div>
   );
 };
