@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import logo from "/favicon.png";
 import PropTypes from "prop-types";
+import logo from "/favicon.png";
 import { ACTION } from "../../state/reducer";
 import Stopwatch from "../Stopwatch";
 
 function Nav({ state, dispatch, characters }) {
   const titleChosen = () => {
-    if (state.gameGenre === "mixed") return "Where is Disney Game";
-    if (state.gameGenre === "poke") return "Where is the Pokemon Game";
-    if (state.gameGenre === "rm") return "Where is Rick & Morty Game";
+    if (state.gameGenre === "disneyMap") return "Where is Disney Game";
+    if (state.gameGenre === "pokemonMap") return "Where is the Pokemon Game";
+    if (state.gameGenre === "rickMortyMap") return "Where is Rick & Morty Game";
     return "Where is Waldo Game";
   };
 
@@ -31,7 +31,6 @@ function Nav({ state, dispatch, characters }) {
         <h1>{titleChosen()}</h1>
         {state.startGame ? (
           <div className="charactersDiv">
-            {/* <div id="stopwatch">0 seconds</div> */}
             <Stopwatch />
             {characters.map((character, index) => {
               return <img key={index} src={character.iconImg} className="characterImg"></img>;
