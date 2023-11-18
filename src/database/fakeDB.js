@@ -1,26 +1,26 @@
-import bethImg from "../assets/characters/beth.png";
-import jerryImg from "../assets/characters/jerry.png";
-import summerImg from "../assets/characters/summer.png";
+import bethImg from "../assets/characters/rickMorty/beth.png";
+import jerryImg from "../assets/characters/rickMorty/jerry.png";
+import summerImg from "../assets/characters/rickMorty/summer.png";
 
 const beth = {
   name: "Beth Smith",
   posX: [1530, 1600],
   posY: [435, 750],
-  url: bethImg,
+  iconImg: bethImg,
 };
 
 const jerry = {
   name: "Jerry Smith",
   posX: [1160, 1240],
   posY: [250, 530],
-  url: jerryImg,
+  iconImg: jerryImg,
 };
 
 const summer = {
   name: "Summer Smith",
   posX: [1345, 1415],
   posY: [515, 1040],
-  url: summerImg,
+  iconImg: summerImg,
 };
 
 export const leaderboardArr = [

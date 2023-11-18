@@ -11,8 +11,12 @@ import characterArr from "../database/fakeDB";
 import Stopwatch from "../utils/stopwatch";
 import PropTypes from "prop-types";
 import { ACTION } from "../state/reducer";
+import processor from "../utils/processCharacter";
+import useFetch from "../hooks/useFetch";
 
 function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
+  const [loading, setLoading] = useState(true);
+  const { getFetch } = useFetch();
   const theStopWatch = Stopwatch();
   const navigateTo = useNavigate();
   const [gameOver, setGameOver] = useState(false);
@@ -21,14 +25,33 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   const [posXY, setPosXY] = useState([]);
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
+  const { processCharacter } = processor();
 
   useEffect(() => {
-    theStopWatch.start();
-    return () => {
-      setGetTime(theStopWatch.getTime());
-      theStopWatch.stop();
+    const getCharacters = async () => {
+      if (loading) {
+        const map = state.gameGenre;
+        const data = await getFetch("/character", map);
+        console.log("data");
+        console.log(data);
+        const characterArr = processCharacter(data);
+        console.log("characterArr");
+        console.log(characterArr);
+        setCharacters(characterArr);
+        setLoading(false);
+      }
+      if (!loading) {
+        theStopWatch.reset();
+        theStopWatch.start();
+        return () => {
+          setGetTime(theStopWatch.getTime());
+          theStopWatch.stop();
+          theStopWatch.reset();
+        };
+      }
     };
-  }, []);
+    getCharacters();
+  }, [loading]);
 
   useEffect(() => {
     if (gameOver) navigateTo("/score-form");
@@ -53,7 +76,7 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
     const markXY = getPosXY();
     const obj = {
       markXY: markXY,
-      icon: loadingIcon,
+      iconImg: loadingIcon,
     };
     setPosXY(markXY);
     setClickArr([...clickArr, obj]);
@@ -83,7 +106,7 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
     if (proccessed) {
       console.log(`processed true`);
       const newArr = [...clickArr];
-      newArr[clickArr.length - 1].icon = checkedIcon;
+      newArr[clickArr.length - 1].iconImg = checkedIcon;
       setClickArr(newArr);
       arr.splice(index, 1);
       setCharacters(arr);
@@ -91,7 +114,7 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
     } else {
       console.log(`processed false`);
       const newArr = [...clickArr];
-      newArr[clickArr.length - 1].icon = mistakeIcon;
+      newArr[clickArr.length - 1].iconImg = mistakeIcon;
       setClickArr(newArr);
     }
     if (scoreRef.current >= 3) {
@@ -164,11 +187,13 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   };
 
   const mapChosen = () => {
-    if (state.gameGenre === "mixed") return map1;
-    if (state.gameGenre === "poke") return map2;
-    if (state.gameGenre === "rm") return map3;
+    if (state.gameGenre === "disneyMap") return map1;
+    if (state.gameGenre === "pokemonMap") return map2;
+    if (state.gameGenre === "rickMortyMap") return map3;
     return errorMap;
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <section>
@@ -185,7 +210,7 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
         />
         {/* Clicked Icons */}
         {clickArr.map((click, index) => (
-          <img key={index} className="icons" style={calculateIconStyle(click)} src={click.icon} />
+          <img key={index} className="icons" style={calculateIconStyle(click)} src={click.iconImg} />
         ))}
         {/* Character Menu */}
         {showMenu && posXY.length > 0 && (
@@ -198,7 +223,7 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
                   gameController(index);
                 }}
               >
-                <img src={character.url} alt={character.name} className="chooseCharacter" />
+                <img src={character.iconImg} alt={character.name} className="chooseCharacter" />
                 <span>{character.name}</span>
               </div>
             ))}

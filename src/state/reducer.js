@@ -11,14 +11,14 @@ const reducer = (state, action) => {
     case "home": {
       return { ...state, gameGenre: "home" };
     }
-    case "gameRM": {
-      return { ...state, gameGenre: "rm" };
+    case "rickMortyMap": {
+      return { ...state, gameGenre: "rickMortyMap" };
     }
-    case "gamePoke": {
-      return { ...state, gameGenre: "poke" };
+    case "pokemonMap": {
+      return { ...state, gameGenre: "pokemonMap" };
     }
-    case "mixed": {
-      return { ...state, gameGenre: "mixed" };
+    case "disneyMap": {
+      return { ...state, gameGenre: "disneyMap" };
     }
     // Default selection
     default: {
@@ -31,9 +31,9 @@ const ACTION = {
   startGame: "startGame",
   stopGame: "stopGame",
   HOME: "home",
-  GAMERM: "gameRM",
-  GAMEPOKE: "gamePoke",
-  MIXED: "mixed",
+  MAPRM: "rickMortyMap",
+  MAPPOKE: "pokemonMap",
+  MAPDISNEY: "disneyMap",
 };
 
 export { reducer, ACTION };

@@ -23,7 +23,7 @@ function Home({ dispatch, setCharacters }) {
             <button
               className="btn"
               onClick={() => {
-                startTheGame(ACTION.MIXED);
+                startTheGame(ACTION.MAPDISNEY);
               }}
             >
               Play
@@ -37,7 +37,7 @@ function Home({ dispatch, setCharacters }) {
             <button
               className="btn"
               onClick={() => {
-                startTheGame(ACTION.GAMEPOKE);
+                startTheGame(ACTION.MAPPOKE);
               }}
             >
               Play
@@ -50,7 +50,7 @@ function Home({ dispatch, setCharacters }) {
             <button
               className="btn"
               onClick={() => {
-                startTheGame(ACTION.GAMERM);
+                startTheGame(ACTION.MAPRM);
               }}
             >
               Play

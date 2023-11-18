@@ -1,7 +1,22 @@
 import PropTypes from "prop-types";
 import ConfettiWin from "../components/ConfettiWin";
+import useFetch from "../hooks/useFetch";
 
-function ScoreForm({ getTime }) {
+function ScoreForm({ state, getTime }) {
+  const { postFetch } = useFetch();
+
+  const postScore = async (event) => {
+    event.preventDefault();
+    const name = document.getElementById("name").value;
+    const score = getTime;
+    const leaderboard = {
+      name: name,
+      score: score,
+      map: state.gameGenre,
+    };
+    await postFetch("/leaderboard", leaderboard);
+  };
+
   return (
     <>
       <div className="scorePage" style={scorePageStyle}>
@@ -11,7 +26,7 @@ function ScoreForm({ getTime }) {
             Your score is: <strong>{getTime}</strong> seconds
           </p>
         </div>
-        <form action="" method="POST" style={formStyles}>
+        <form action="" method="POST" style={formStyles} onClick={postScore}>
           <label htmlFor="name" style={labelStyles}>
             What is your name:
           </label>
@@ -28,6 +43,7 @@ function ScoreForm({ getTime }) {
 
 ScoreForm.propTypes = {
   getTime: PropTypes.number,
+  state: PropTypes.object,
 };
 
 export default ScoreForm;

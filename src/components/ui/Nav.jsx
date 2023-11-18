@@ -32,7 +32,7 @@ function Nav({ state, dispatch, characters }) {
           <div className="charactersDiv">
             <div id="stopwatch">0 seconds</div>
             {characters.map((character, index) => {
-              return <img key={index} src={character.url} className="characterImg"></img>;
+              return <img key={index} src={character.iconImg} className="characterImg"></img>;
             })}
           </div>
         ) : (
