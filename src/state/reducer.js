@@ -24,10 +24,6 @@ const reducer = (state, action) => {
     case "mixed": {
       return { ...state, gameGenre: "mixed" };
     }
-    // state to store state.time
-    case "time": {
-      return { ...state, time: state.time + 1 };
-    }
     // Default selection
     default: {
       throw new Error();

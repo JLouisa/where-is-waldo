@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import logo from "/favicon.png";
-import characterArr from "../../database/fakeDB";
-import Stopwatch from "../stopwatch";
 import PropTypes from "prop-types";
 
-function Nav({ state, dispatch }) {
+function Nav({ state, characters }) {
   return (
     <nav>
       <div className="nav1">
@@ -18,8 +16,8 @@ function Nav({ state, dispatch }) {
         <h1>{state.gameGenre === "rm" ? "Where is Rick & Morty Game" : "Where is Waldo Game"}</h1>
         {state.startGame ? (
           <div className="charactersDiv">
-            <Stopwatch state={state} dispatch={dispatch} />
-            {characterArr.map((character, index) => {
+            <div id="stopwatch">0 seconds</div>
+            {characters.map((character, index) => {
               return <img key={index} src={character.url} className="characterImg"></img>;
             })}
           </div>
@@ -41,6 +39,7 @@ function Nav({ state, dispatch }) {
 Nav.propTypes = {
   state: PropTypes.object,
   dispatch: PropTypes.func,
+  characters: PropTypes.array,
 };
 
 export default Nav;

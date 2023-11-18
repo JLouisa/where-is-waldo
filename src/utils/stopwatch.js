@@ -1,44 +1,40 @@
-// stopwatch.js
-
-export const Stopwatch = () => {
+const Stopwatch = () => {
   let startTime;
-  let isRunning = false;
   let elapsedTime = 0;
   let intervalId;
 
-  const startStop = () => {
-    if (isRunning) {
-      clearInterval(intervalId);
-    } else {
-      startTime = Date.now() - (elapsedTime || 0);
-      intervalId = setInterval(updateTime, 100);
-    }
+  const start = () => {
+    startTime = Date.now() - (elapsedTime || 0);
+    intervalId = setInterval(updateTime, 1000);
+  };
 
-    isRunning = !isRunning;
+  const stop = () => {
+    clearInterval(intervalId);
   };
 
   const reset = () => {
     clearInterval(intervalId);
     elapsedTime = 0;
     updateTime();
-    isRunning = false;
   };
 
   const updateTime = () => {
     const currentTime = Date.now();
     elapsedTime = currentTime - startTime;
     const formattedTime = formatTime(elapsedTime);
-    document.getElementById("stopwatch").innerText = formattedTime;
+    document.getElementById("stopwatch").innerText = `${formattedTime} seconds`;
   };
 
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(seconds).padStart(2, "0");
-    return `00:${formattedMinutes}:${formattedSeconds}`;
+    return String(totalSeconds);
   };
 
-  return { startStop, reset };
+  const getTime = () => {
+    return Math.round(elapsedTime / 1000);
+  };
+
+  return { start, reset, stop, getTime };
 };
+
+export default Stopwatch;

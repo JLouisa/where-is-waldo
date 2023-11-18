@@ -5,14 +5,13 @@ import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import characterArr from "../database/fakeDB";
-import { ACTION } from "../state/reducer";
-import { Stopwatch } from "../utils/stopwatch";
+import Stopwatch from "../utils/stopwatch";
 import PropTypes from "prop-types";
+import { ACTION } from "../state/reducer";
 
-function Map({ state, dispatch }) {
+function Map({ dispatch, setGetTime, characters, setCharacters }) {
   const theStopWatch = Stopwatch();
   const navigateTo = useNavigate();
-  const [characters, setCharacters] = useState(characterArr);
   const [gameOver, setGameOver] = useState(false);
   const [clickArr, setClickArr] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
@@ -21,9 +20,11 @@ function Map({ state, dispatch }) {
   const scoreRef = useRef(0);
 
   useEffect(() => {
-    if (state.isRunning === false) {
-      dispatch({ type: ACTION.STOPWATCH_START });
-    }
+    theStopWatch.start();
+    return () => {
+      setGetTime(theStopWatch.getTime());
+      theStopWatch.stop();
+    };
   }, []);
 
   useEffect(() => {
@@ -92,9 +93,8 @@ function Map({ state, dispatch }) {
     }
     if (scoreRef.current >= 3) {
       console.log("Game Over");
-      dispatch({ type: ACTION.STOPWATCH_STOP });
-      theStopWatch.startStop();
       setTimeout(() => {
+        dispatch({ type: ACTION.stopGame });
         setGameOver(true);
       }, 750);
     }
@@ -199,9 +199,9 @@ function Map({ state, dispatch }) {
 }
 
 Map.propTypes = {
-  isRunning: PropTypes.bool,
-  setIsRunning: PropTypes.func,
-  state: PropTypes.object,
+  setGetTime: PropTypes.func,
+  characters: PropTypes.array,
+  setCharacters: PropTypes.func,
   dispatch: PropTypes.func,
 };
 

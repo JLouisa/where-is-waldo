@@ -4,14 +4,11 @@ import rickMortyIcon from "../assets/rickAndMorty.png";
 import pokemonIcon from "../assets/pokeball.png";
 import disneyIcon from "../assets/disney.png";
 import { ACTION } from "../state/reducer";
-import { Stopwatch } from "../utils/stopwatch";
 
 function Home({ /*state,*/ dispatch }) {
   const startTheGame = (map) => {
     dispatch({ type: ACTION.startGame });
     dispatch({ type: map });
-    const theStopWatch = Stopwatch();
-    theStopWatch.startStop();
   };
 
   return (

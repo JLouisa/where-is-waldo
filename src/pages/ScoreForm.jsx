@@ -1,14 +1,14 @@
-import useGlobalStore from "../state/useGlobalStore";
+import PropTypes from "prop-types";
 import ConfettiWin from "../components/ConfettiWin";
 
-function ScoreForm() {
-  const { gameOverTime } = useGlobalStore();
+function ScoreForm({ getTime }) {
   return (
     <>
       <div className="scorePage" style={scorePageStyle}>
         <div>
-          <p>
-            Your score is: <strong>{gameOverTime / 100}s</strong>
+          <h2 style={textAlingCenter}>You found the 3 characters!</h2>
+          <p style={textAlingCenter}>
+            Your score is: <strong>{getTime}</strong> seconds
           </p>
         </div>
         <form action="" method="POST" style={formStyles}>
@@ -26,9 +26,17 @@ function ScoreForm() {
   );
 }
 
+ScoreForm.propTypes = {
+  getTime: PropTypes.number,
+};
+
 export default ScoreForm;
 
 // CSS
+const textAlingCenter = {
+  textAlign: "center",
+};
+
 const scorePageStyle = {
   display: "flex",
   justifyContent: "center",
