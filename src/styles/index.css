@@ -264,7 +264,7 @@ main {
 }
 
 /* =================Leaderboard================= */
-.leaderboardInfo {
+/* .leaderboardInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -277,7 +277,7 @@ main {
   padding: 0.5em;
   margin: 1em;
   padding: 1em 2em;
-}
+} */
 
 /*! ================Footer================ */
 footer {

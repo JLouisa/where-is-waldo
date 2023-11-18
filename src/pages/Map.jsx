@@ -1,4 +1,7 @@
-import map1 from "../assets/maps/rickAndMorty.png";
+import map1 from "../assets/maps/mixed.png";
+import map2 from "../assets/maps/pokemon.jpg";
+import map3 from "../assets/maps/rickAndMorty.png";
+import errorMap from "../assets/maps/error.jpg";
 import loadingIcon from "../assets/markers/loading.svg";
 import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
@@ -9,7 +12,7 @@ import Stopwatch from "../utils/stopwatch";
 import PropTypes from "prop-types";
 import { ACTION } from "../state/reducer";
 
-function Map({ dispatch, setGetTime, characters, setCharacters }) {
+function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   const theStopWatch = Stopwatch();
   const navigateTo = useNavigate();
   const [gameOver, setGameOver] = useState(false);
@@ -160,12 +163,19 @@ function Map({ dispatch, setGetTime, characters, setCharacters }) {
     };
   };
 
+  const mapChosen = () => {
+    if (state.gameGenre === "mixed") return map1;
+    if (state.gameGenre === "poke") return map2;
+    if (state.gameGenre === "rm") return map3;
+    return errorMap;
+  };
+
   return (
     <section>
       <figure className="mapContainer">
         {/* Map */}
         <img
-          src={map1}
+          src={mapChosen()}
           alt="Rick and more find crowd"
           className="rickMortyMap"
           onClick={() => {
@@ -200,6 +210,7 @@ function Map({ dispatch, setGetTime, characters, setCharacters }) {
 }
 
 Map.propTypes = {
+  state: PropTypes.object,
   setGetTime: PropTypes.func,
   characters: PropTypes.array,
   setCharacters: PropTypes.func,

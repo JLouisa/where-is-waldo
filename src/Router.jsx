@@ -11,7 +11,7 @@ import { reducer } from "./state/reducer.js";
 import { useState } from "react";
 
 const Router = () => {
-  const [state, dispatch] = useReducer(reducer, { isRunning: false, startGame: false, gameGenre: "home" });
+  const [state, dispatch] = useReducer(reducer, { startGame: false, gameGenre: "home" });
   const [getTime, setGetTime] = useState(0);
   const [characters, setCharacters] = useState([]);
 

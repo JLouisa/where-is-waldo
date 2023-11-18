@@ -1,12 +1,5 @@
 const reducer = (state, action) => {
   switch (action.type) {
-    // Start and Stop the timer
-    case "stopwatchStart": {
-      return { ...state, isRunning: true };
-    }
-    case "stopwatchStop": {
-      return { ...state, isRunning: false };
-    }
     // Start and Stop the game (switch to map)
     case "startGame": {
       return { ...state, startGame: true };
@@ -35,15 +28,12 @@ const reducer = (state, action) => {
 };
 
 const ACTION = {
-  STOPWATCH_START: "stopwatchStart",
-  STOPWATCH_STOP: "stopwatchStop",
   startGame: "startGame",
   stopGame: "stopGame",
   HOME: "home",
   GAMERM: "gameRM",
   GAMEPOKE: "gamePoke",
   MIXED: "mixed",
-  TIME: "time",
 };
 
 export { reducer, ACTION };

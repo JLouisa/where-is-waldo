@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import rickMortyIcon from "../assets/rickAndMorty.png";
-import pokemonIcon from "../assets/pokeball.png";
-import disneyIcon from "../assets/disney.png";
+import rickMortyIcon from "../assets/icons/rickAndMorty.png";
+import pokemonIcon from "../assets/icons/pokeball.png";
+import disneyIcon from "../assets/icons/disney.png";
 import { ACTION } from "../state/reducer";
 import characterArr from "../database/fakeDB";
 
@@ -23,7 +23,7 @@ function Home({ dispatch, setCharacters }) {
             <button
               className="btn"
               onClick={() => {
-                startTheGame(ACTION.GAMERM);
+                startTheGame(ACTION.MIXED);
               }}
             >
               Play
@@ -37,7 +37,7 @@ function Home({ dispatch, setCharacters }) {
             <button
               className="btn"
               onClick={() => {
-                startTheGame(ACTION.GAMERM);
+                startTheGame(ACTION.GAMEPOKE);
               }}
             >
               Play
@@ -64,6 +64,7 @@ function Home({ dispatch, setCharacters }) {
 
 Home.propTypes = {
   setStartGame: PropTypes.func,
+  setCharacters: PropTypes.func,
   state: PropTypes.object,
   dispatch: PropTypes.func,
 };
