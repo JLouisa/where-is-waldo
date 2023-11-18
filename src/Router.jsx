@@ -3,7 +3,6 @@ import App from "./App.jsx";
 import Map from "./pages/Map.jsx";
 import GameRules from "./pages/GameRules.jsx";
 import Leaderboard from "./pages/Leaderboard.jsx";
-import TestPage from "./pages/TestPage.jsx";
 import ScoreForm from "./pages/ScoreForm.jsx";
 import Home from "./pages/Home.jsx";
 import { useReducer } from "react";
@@ -24,7 +23,6 @@ const Router = () => {
         { path: "/score-form", element: <ScoreForm state={state} /> },
         { path: "/leaderboard", element: <Leaderboard /> },
         { path: "/game-rules", element: <GameRules /> },
-        { path: "/test", element: <TestPage /> },
         {
           path: "/map",
           element: <Map state={state} dispatch={dispatch} characters={characters} setCharacters={setCharacters} />,

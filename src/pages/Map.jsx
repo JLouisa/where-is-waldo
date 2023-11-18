@@ -59,8 +59,7 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return () => setGameOver(false);
   }, [gameOver, navigateTo]);
 
-  console.log(clickArr);
-
+  // Working;
   const getPosXY = () => {
     const map = document.querySelector(".rickMortyMap");
     const rect = map.getBoundingClientRect();
@@ -69,9 +68,23 @@ function Map({ state, dispatch, characters, setCharacters }) {
     const posY = e.clientY;
     console.log(`PosX, PosY`);
     console.log(`PosX: ${posX}, PosY: ${posY}`);
-    const posXY = [posX, posY, rect];
+    // const posXY = [posX, posY, rect];
+    const posXY = { posX: posX, posY: posY, rect: rect };
     return posXY;
   };
+
+  // const getPosXY = () => {
+  //   const map = document.querySelector(".rickMortyMap");
+  //   const rect = map.getBoundingClientRect();
+
+  //   const e = window.event;
+  //   const posX = ((e.clientX - rect.x) / rect.width) * 100;
+  //   const posY = ((e.clientY - rect.y) / rect.height) * 100;
+  //   console.log(`PosX, PosY`);
+  //   console.log(`PosX: ${posX}, PosY: ${posY}`);
+  //   const posXY = [posX, posY, rect];
+  //   return posXY;
+  // };
 
   const addMark = () => {
     const markXY = getPosXY();
@@ -99,13 +112,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
   };
 
   const sendToServer = (item, arr, index) => {
-    console.log(`Server: ${item.name}, X:${item.posX}, Y:${item.posY}`);
-    console.log(item.name, [posXY[0], posXY[1]]);
     const proccessed = proccessOnServer(item, posXY);
-    console.log(`proccessed`);
-    console.log(proccessed);
     if (proccessed) {
-      console.log(`processed true`);
       const newArr = [...clickArr];
       newArr[clickArr.length - 1].iconImg = checkedIcon;
       setClickArr(newArr);
@@ -113,13 +121,11 @@ function Map({ state, dispatch, characters, setCharacters }) {
       setCharacters(arr);
       scoreRef.current++;
     } else {
-      console.log(`processed false`);
       const newArr = [...clickArr];
       newArr[clickArr.length - 1].iconImg = mistakeIcon;
       setClickArr(newArr);
     }
     if (scoreRef.current >= 3) {
-      console.log("Game Over");
       setTimeout(() => {
         dispatch({ type: ACTION.stopGame });
         setGameOver(true);
@@ -128,8 +134,6 @@ function Map({ state, dispatch, characters, setCharacters }) {
   };
 
   const proccessOnServer = (item, posXY) => {
-    console.log("Array of Characters:");
-    console.log(characters);
     const foundChar = characters.find((char) => {
       return char.name === item.name;
     });
@@ -144,6 +148,31 @@ function Map({ state, dispatch, characters, setCharacters }) {
       return false;
     }
     return false;
+  };
+
+  // const calculateIconStyle = (clickedCharacter) => {
+  //   return {
+  //     position: "absolute",
+  //     left: `${clickedCharacter.markXY[0] - 40}%`,
+  //     top: `${clickedCharacter.markXY[1] - 40}%`,
+  //   };
+  // };
+
+  const calculateMenuStyle = () => {
+    return {
+      position: "absolute",
+      left: `${posXY[0] + 80 - 40}px`,
+      top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
+    };
+  };
+
+  // (Working)
+  const calculateIconStyle = (click) => {
+    return {
+      position: "absolute",
+      left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
+      top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
+    };
   };
 
   //! Game Controller
@@ -174,22 +203,6 @@ function Map({ state, dispatch, characters, setCharacters }) {
     }
   };
 
-  const calculateIconStyle = (click) => {
-    return {
-      position: "absolute",
-      left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
-      top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
-    };
-  };
-
-  const calculateMenuStyle = () => {
-    return {
-      position: "absolute",
-      left: `${posXY[0] + 80 - 40}px`,
-      top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
-    };
-  };
-
   const mapChosen = () => {
     if (state.gameGenre === "disneyMap") return map1;
     if (state.gameGenre === "pokemonMap") return map2;
@@ -213,8 +226,13 @@ function Map({ state, dispatch, characters, setCharacters }) {
           }}
         />
         {/* Clicked Icons */}
-        {clickArr.map((click, index) => (
-          <img key={index} className="icons" style={calculateIconStyle(click)} src={click.iconImg} />
+        {clickArr.map((clickedCharacter, index) => (
+          <img
+            key={index}
+            className="icons"
+            style={calculateIconStyle(clickedCharacter)}
+            src={clickedCharacter.iconImg}
+          />
         ))}
         {/* Character Menu */}
         {showMenu && posXY.length > 0 && (

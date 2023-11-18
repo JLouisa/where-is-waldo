@@ -49,8 +49,6 @@ const processor = () => {
 
   const processCharacter = (fetchArr) => {
     const arr = [...fetchArr];
-    console.log("arr");
-    console.log(arr);
     const formattedArr = arr.map((item) => {
       const character = new Characters(item.character, item.posX, item.posY, item.map, imageDB[item.character]);
       return character;
