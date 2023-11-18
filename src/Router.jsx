@@ -9,12 +9,11 @@ import Home from "./pages/Home.jsx";
 import { useReducer } from "react";
 import { reducer } from "./state/reducer.js";
 import { useState } from "react";
-import characterArr from "./database/fakeDB";
 
 const Router = () => {
-  const [state, dispatch] = useReducer(reducer, { isRunning: false, startGame: false, gameGenre: "" });
+  const [state, dispatch] = useReducer(reducer, { isRunning: false, startGame: false, gameGenre: "home" });
   const [getTime, setGetTime] = useState(0);
-  const [characters, setCharacters] = useState(characterArr);
+  const [characters, setCharacters] = useState([]);
 
   const router = createBrowserRouter([
     {
@@ -22,7 +21,7 @@ const Router = () => {
       element: <App state={state} dispatch={dispatch} characters={characters} />,
       children: [
         { path: "", element: <Navigate to="/home" /> },
-        { path: "/home", element: <Home state={state} dispatch={dispatch} /> },
+        { path: "/home", element: <Home state={state} dispatch={dispatch} setCharacters={setCharacters} /> },
         {
           path: "/map",
           element: (

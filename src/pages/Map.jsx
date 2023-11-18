@@ -95,6 +95,7 @@ function Map({ dispatch, setGetTime, characters, setCharacters }) {
       console.log("Game Over");
       setTimeout(() => {
         dispatch({ type: ACTION.stopGame });
+        dispatch({ type: ACTION.HOME });
         setGameOver(true);
       }, 750);
     }

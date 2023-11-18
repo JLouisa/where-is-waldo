@@ -15,6 +15,9 @@ const reducer = (state, action) => {
       return { ...state, startGame: false };
     }
     // Choosing the map
+    case "home": {
+      return { ...state, gameGenre: "home" };
+    }
     case "gameRM": {
       return { ...state, gameGenre: "rm" };
     }
@@ -36,6 +39,7 @@ const ACTION = {
   STOPWATCH_STOP: "stopwatchStop",
   startGame: "startGame",
   stopGame: "stopGame",
+  HOME: "home",
   GAMERM: "gameRM",
   GAMEPOKE: "gamePoke",
   MIXED: "mixed",

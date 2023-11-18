@@ -4,11 +4,13 @@ import rickMortyIcon from "../assets/rickAndMorty.png";
 import pokemonIcon from "../assets/pokeball.png";
 import disneyIcon from "../assets/disney.png";
 import { ACTION } from "../state/reducer";
+import characterArr from "../database/fakeDB";
 
-function Home({ /*state,*/ dispatch }) {
+function Home({ dispatch, setCharacters }) {
   const startTheGame = (map) => {
     dispatch({ type: ACTION.startGame });
     dispatch({ type: map });
+    setCharacters(characterArr);
   };
 
   return (
