@@ -22,7 +22,12 @@ const Stopwatch = () => {
     const currentTime = Date.now();
     elapsedTime = currentTime - startTime;
     const formattedTime = formatTime(elapsedTime);
-    document.getElementById("stopwatch").innerText = `${formattedTime} seconds`;
+    if (document.getElementById("stopwatch").innerText) {
+      document.getElementById("stopwatch").innerText = `${formattedTime} seconds`;
+    } else {
+      stop();
+      reset();
+    }
   };
 
   const formatTime = (milliseconds) => {

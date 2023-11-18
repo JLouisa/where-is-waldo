@@ -4,14 +4,19 @@ import rickMortyIcon from "../assets/icons/rickAndMorty.png";
 import pokemonIcon from "../assets/icons/pokeball.png";
 import disneyIcon from "../assets/icons/disney.png";
 import { ACTION } from "../state/reducer";
-import characterArr from "../database/fakeDB";
+import { useEffect } from "react";
+import useGlobalStore from "../state/useGlobalStore";
 
-function Home({ dispatch, setCharacters }) {
+function Home({ dispatch }) {
+  const { setGetTime } = useGlobalStore();
   const startTheGame = (map) => {
     dispatch({ type: ACTION.startGame });
     dispatch({ type: map });
-    // setCharacters(characterArr);
   };
+
+  useEffect(() => {
+    setGetTime(0);
+  }, []);
 
   return (
     <div className="theChoiceMain">

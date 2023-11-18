@@ -3,12 +3,14 @@ import ConfettiWin from "../components/ConfettiWin";
 import useFetch from "../hooks/useFetch";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useGlobalStore from "../state/useGlobalStore";
 
-function ScoreForm({ state, getTime }) {
+function ScoreForm({ state }) {
   const [loadingMsg, setLoadingMsg] = useState([]);
-  const [reRoute, setReRoute] = useState(false);
   const navigateTo = useNavigate();
   const { postFetch } = useFetch();
+  const { getTime, setGetTime } = useGlobalStore();
+  const [done, setDone] = useState(false);
 
   const postScore = async (event) => {
     event.preventDefault();
@@ -22,21 +24,30 @@ function ScoreForm({ state, getTime }) {
 
     console.log(leaderboard);
     const response = await postFetch("/leaderboard", leaderboard);
-    const data = await response.json();
-    setLoadingMsg(data.data);
-    if (data.ok === "ok") {
-      setReRoute(true);
-    }
+    console.log(response);
+    setLoadingMsg(response.data);
+    setTimeout(() => {
+      setGetTime(0);
+      setDone(true);
+    }, 750);
   };
 
   useEffect(() => {
-    if (reRoute) navigateTo("/home");
-    return () => setReRoute(false);
-  }, [reRoute, navigateTo]);
+    if (state.gameGenre === "home") {
+      navigateTo("/home");
+    }
+  });
+
+  useEffect(() => {
+    if (done) navigateTo("/home");
+    return () => setDone(false);
+  }, [done, navigateTo]);
 
   return (
     <>
-      {loadingMsg.message !== undefined && <div>{loadingMsg.message}</div>}
+      {loadingMsg.message !== undefined && (
+        <div style={loadingMsg.ok === "ok" ? textAlingCenterMsg : textAlingCenterError}>{loadingMsg.message}</div>
+      )}
       <div className="scorePage" style={scorePageStyle}>
         <div>
           <h2 style={textAlingCenter}>You found the 3 characters!</h2>
@@ -67,6 +78,16 @@ ScoreForm.propTypes = {
 export default ScoreForm;
 
 // CSS
+const textAlingCenterMsg = {
+  textAlign: "center",
+  color: "darkgreen",
+};
+
+const textAlingCenterError = {
+  textAlign: "center",
+  color: "red",
+};
+
 const textAlingCenter = {
   textAlign: "center",
 };

@@ -7,16 +7,15 @@ import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Stopwatch from "../utils/stopwatch";
 import PropTypes from "prop-types";
 import { ACTION } from "../state/reducer";
 import processor from "../utils/processCharacter";
 import useFetch from "../hooks/useFetch";
+import useGlobalStore from "../state/useGlobalStore";
 
-function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
+function Map({ state, dispatch, characters, setCharacters }) {
   const [loading, setLoading] = useState(true);
   const { getFetch } = useFetch();
-  const theStopWatch = Stopwatch();
   const navigateTo = useNavigate();
   const [gameOver, setGameOver] = useState(false);
   const [clickArr, setClickArr] = useState([]);
@@ -25,7 +24,9 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
   const { processCharacter } = processor();
+  const { setIsRunning } = useGlobalStore();
 
+  // Redirect if refreshed on map page
   useEffect(() => {
     if (state.gameGenre === "home") {
       navigateTo("/home");
@@ -33,21 +34,20 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   });
 
   useEffect(() => {
+    // fetch data when loading
     const getCharacters = async () => {
       if (loading) {
-        const map = `/${state.gameGenre}/map`;
+        const map = `/${state.gameGenre}`;
         const data = await getFetch("/character", map);
         const characterArr = processCharacter(data);
         setCharacters(characterArr);
         setLoading(false);
       }
+      // Start stopwatch after loading
       if (!loading) {
-        theStopWatch.reset();
-        theStopWatch.start();
+        setIsRunning(true);
         return () => {
-          setGetTime(theStopWatch.getTime());
-          theStopWatch.stop();
-          theStopWatch.reset();
+          setIsRunning(false);
         };
       }
     };
@@ -122,7 +122,6 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
       console.log("Game Over");
       setTimeout(() => {
         dispatch({ type: ACTION.stopGame });
-        // dispatch({ type: ACTION.HOME });
         setGameOver(true);
       }, 750);
     }

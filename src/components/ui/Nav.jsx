@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "/favicon.png";
 import PropTypes from "prop-types";
 import { ACTION } from "../../state/reducer";
+import Stopwatch from "../Stopwatch";
 
 function Nav({ state, dispatch, characters }) {
   const titleChosen = () => {
@@ -30,7 +31,8 @@ function Nav({ state, dispatch, characters }) {
         <h1>{titleChosen()}</h1>
         {state.startGame ? (
           <div className="charactersDiv">
-            <div id="stopwatch">0 seconds</div>
+            {/* <div id="stopwatch">0 seconds</div> */}
+            <Stopwatch />
             {characters.map((character, index) => {
               return <img key={index} src={character.iconImg} className="characterImg"></img>;
             })}

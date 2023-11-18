@@ -12,7 +12,6 @@ import { useState } from "react";
 
 const Router = () => {
   const [state, dispatch] = useReducer(reducer, { startGame: false, gameGenre: "home" });
-  const [getTime, setGetTime] = useState(0);
   const [characters, setCharacters] = useState([]);
 
   const router = createBrowserRouter([
@@ -22,21 +21,13 @@ const Router = () => {
       children: [
         { path: "", element: <Navigate to="/home" /> },
         { path: "/home", element: <Home state={state} dispatch={dispatch} setCharacters={setCharacters} /> },
-        { path: "/score-form", element: <ScoreForm getTime={getTime} state={state} /> },
+        { path: "/score-form", element: <ScoreForm state={state} /> },
         { path: "/leaderboard", element: <Leaderboard /> },
         { path: "/game-rules", element: <GameRules /> },
         { path: "/test", element: <TestPage /> },
         {
           path: "/map",
-          element: (
-            <Map
-              state={state}
-              dispatch={dispatch}
-              setGetTime={setGetTime}
-              characters={characters}
-              setCharacters={setCharacters}
-            />
-          ),
+          element: <Map state={state} dispatch={dispatch} characters={characters} setCharacters={setCharacters} />,
         },
       ],
     },
