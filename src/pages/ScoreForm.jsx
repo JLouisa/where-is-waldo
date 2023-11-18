@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 import ConfettiWin from "../components/ConfettiWin";
 import useFetch from "../hooks/useFetch";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ScoreForm({ state, getTime }) {
+  const [loadingMsg, setLoadingMsg] = useState([]);
+  const [reRoute, setReRoute] = useState(false);
+  const navigateTo = useNavigate();
   const { postFetch } = useFetch();
 
   const postScore = async (event) => {
@@ -14,11 +19,24 @@ function ScoreForm({ state, getTime }) {
       score: score,
       map: state.gameGenre,
     };
-    await postFetch("/leaderboard", leaderboard);
+
+    console.log(leaderboard);
+    const response = await postFetch("/leaderboard", leaderboard);
+    const data = await response.json();
+    setLoadingMsg(data.data);
+    if (data.ok === "ok") {
+      setReRoute(true);
+    }
   };
+
+  useEffect(() => {
+    if (reRoute) navigateTo("/home");
+    return () => setReRoute(false);
+  }, [reRoute, navigateTo]);
 
   return (
     <>
+      {loadingMsg.message !== undefined && <div>{loadingMsg.message}</div>}
       <div className="scorePage" style={scorePageStyle}>
         <div>
           <h2 style={textAlingCenter}>You found the 3 characters!</h2>
@@ -26,7 +44,7 @@ function ScoreForm({ state, getTime }) {
             Your score is: <strong>{getTime}</strong> seconds
           </p>
         </div>
-        <form action="" method="POST" style={formStyles} onClick={postScore}>
+        <form action="" method="POST" style={formStyles} onSubmit={postScore}>
           <label htmlFor="name" style={labelStyles}>
             What is your name:
           </label>

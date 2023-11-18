@@ -1,22 +1,43 @@
 import formattedDate from "../utils/formattedDate";
-import { leaderboardArr } from "../database/fakeDB";
+// import { leaderboardArr } from "../database/fakeDB";
+import { useState, useEffect } from "react";
+import useFetch from "../hooks/useFetch";
 
 function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState([]);
+  const { getFetch } = useFetch();
+
+  useEffect(() => {
+    const getLeaderboard = async () => {
+      const data = await getFetch("/leaderboard");
+      console.log("data");
+      console.log(data);
+      console.log(data[0]);
+      console.log(data[1]);
+      console.log(data[2]);
+      setLeaderboard(data);
+    };
+    getLeaderboard();
+    return setLeaderboard([]);
+  }, []);
+
+  if (leaderboard.length === 0) return <div>Loading...</div>;
+
   return (
     <div className="leaderboardInfo" style={leaderboardInfoStyle}>
       <div>
-        {leaderboardArr.length > 0 ? (
+        {leaderboard && leaderboard.length > 0 && leaderboard[2] !== undefined ? (
           <>
             <h2 style={h2Style}>Disney Waldo</h2>
             <ol>
-              {leaderboardArr.map((player) => {
+              {leaderboard[2].map((player) => {
                 return (
                   <li className="playerCards" style={playerCardsStyle} key={player._id}>
                     <p>
-                      Player: <strong>{player.name}</strong>
+                      Player: <strong>{player.player}</strong>
                     </p>
                     <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.date)}</p>
+                    <p>Date: {formattedDate(player.createdDate)}</p>
                   </li>
                 );
               })}
@@ -27,18 +48,18 @@ function Leaderboard() {
         )}
       </div>
       <div>
-        {leaderboardArr.length > 0 ? (
+        {leaderboard.length > 0 && leaderboard[1] !== undefined ? (
           <>
             <h2 style={h2Style}>Pokemon Waldo</h2>
             <ol>
-              {leaderboardArr.map((player) => {
+              {leaderboard[1].map((player) => {
                 return (
                   <li className="playerCards" style={playerCardsStyle} key={player._id}>
                     <p>
-                      Player: <strong>{player.name}</strong>
+                      Player: <strong>{player.player}</strong>
                     </p>
                     <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.date)}</p>
+                    <p>Date: {formattedDate(player.createdDate)}</p>
                   </li>
                 );
               })}
@@ -49,18 +70,18 @@ function Leaderboard() {
         )}
       </div>
       <div>
-        {leaderboardArr.length > 0 ? (
+        {leaderboard.length > 0 && leaderboard[0] !== undefined ? (
           <>
             <h2 style={h2Style}>Rick & Morty Waldo</h2>
             <ol>
-              {leaderboardArr.map((player) => {
+              {leaderboard[0].map((player) => {
                 return (
                   <li className="playerCards" style={playerCardsStyle} key={player._id}>
                     <p>
-                      Player: <strong>{player.name}</strong>
+                      Player: <strong>{player.player}</strong>
                     </p>
                     <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.date)}</p>
+                    <p>Date: {formattedDate(player.createdDate)}</p>
                   </li>
                 );
               })}

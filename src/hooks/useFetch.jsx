@@ -6,12 +6,12 @@ function useFetch() {
   const AbortControllerRefPost = useRef(null);
   const host = apiHost();
 
-  const getFetch = async (apiStr, value, url = host) => {
+  const getFetch = async (apiStr, value = "", url = host) => {
     AbortControllerRefGet.current?.abort();
     AbortControllerRefGet.current = new AbortController();
 
     try {
-      const response = await fetch(`${url}${apiStr}/${value}`, {
+      const response = await fetch(`${url}${apiStr}${value}`, {
         signal: AbortControllerRefGet.current?.signal,
         method: "GET",
         headers: {
@@ -21,6 +21,8 @@ function useFetch() {
         },
       });
       const data = await response.json();
+      console.log("data");
+      console.log(data);
       return data.data;
     } catch (error) {
       if (error.name === "AbortError") {

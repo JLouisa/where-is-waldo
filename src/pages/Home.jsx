@@ -10,7 +10,7 @@ function Home({ dispatch, setCharacters }) {
   const startTheGame = (map) => {
     dispatch({ type: ACTION.startGame });
     dispatch({ type: map });
-    setCharacters(characterArr);
+    // setCharacters(characterArr);
   };
 
   return (

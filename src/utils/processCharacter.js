@@ -9,7 +9,7 @@ import flamingoImg from "../assets/characters/rickMorty/flamingo.png";
 const processor = () => {
   class Characters {
     constructor(name, posX, posY, map, iconImg) {
-      (this.name = name), (this.markXY = [posX, posY]), (this.map = map), (this.iconImg = iconImg);
+      (this.name = name), (this.posXY = [posX, posY]), (this.map = map), (this.iconImg = iconImg);
     }
   }
 

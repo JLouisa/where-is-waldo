@@ -7,7 +7,6 @@ import checkedIcon from "../assets/markers/checkbox-circle.svg";
 import mistakeIcon from "../assets/markers/mistake-circle.svg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import characterArr from "../database/fakeDB";
 import Stopwatch from "../utils/stopwatch";
 import PropTypes from "prop-types";
 import { ACTION } from "../state/reducer";
@@ -28,15 +27,17 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
   const { processCharacter } = processor();
 
   useEffect(() => {
+    if (state.gameGenre === "home") {
+      navigateTo("/home");
+    }
+  });
+
+  useEffect(() => {
     const getCharacters = async () => {
       if (loading) {
-        const map = state.gameGenre;
+        const map = `/${state.gameGenre}/map`;
         const data = await getFetch("/character", map);
-        console.log("data");
-        console.log(data);
         const characterArr = processCharacter(data);
-        console.log("characterArr");
-        console.log(characterArr);
         setCharacters(characterArr);
         setLoading(false);
       }
@@ -121,19 +122,23 @@ function Map({ state, dispatch, setGetTime, characters, setCharacters }) {
       console.log("Game Over");
       setTimeout(() => {
         dispatch({ type: ACTION.stopGame });
-        dispatch({ type: ACTION.HOME });
+        // dispatch({ type: ACTION.HOME });
         setGameOver(true);
       }, 750);
     }
   };
 
   const proccessOnServer = (item, posXY) => {
-    const foundChar = characterArr.find((char) => {
+    console.log("Array of Characters:");
+    console.log(characters);
+    const foundChar = characters.find((char) => {
       return char.name === item.name;
     });
+    console.log("found Character");
+    console.log(foundChar);
     if (foundChar) {
-      const correctX = posXY[0] >= foundChar.posX[0] && posXY[0] <= foundChar.posX[1];
-      const correctY = posXY[1] >= foundChar.posY[0] && posXY[1] <= foundChar.posY[1];
+      const correctX = posXY[0] >= foundChar.posXY[0][0] && posXY[0] <= foundChar.posXY[0][1];
+      const correctY = posXY[1] >= foundChar.posXY[1][0] && posXY[1] <= foundChar.posXY[1][1];
       if (correctX && correctY) {
         return true;
       }
