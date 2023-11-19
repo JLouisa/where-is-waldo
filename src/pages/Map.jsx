@@ -161,7 +161,7 @@ function Map({ state, dispatch, characters, setCharacters }) {
   const calculateMenuStyle = () => {
     return {
       position: "absolute",
-      left: `${posXY[0] + 80 - 40}px`,
+      left: `${posXY[0]}px`,
       top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
     };
   };
