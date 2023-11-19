@@ -21,7 +21,7 @@ import simbaImg from "../assets/characters/disney/simba.png";
 const processor = () => {
   class Characters {
     constructor(name, posX, posY, map, iconImg) {
-      (this.name = name), (this.posXY = [posX, posY]), (this.map = map), (this.iconImg = iconImg);
+      (this.name = name), (this.posX = posX), (this.posY = posY), (this.map = map), (this.iconImg = iconImg);
     }
   }
 

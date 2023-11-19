@@ -68,8 +68,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
     const posY = e.clientY;
     console.log(`PosX, PosY`);
     console.log(`PosX: ${posX}, PosY: ${posY}`);
-    // const posXY = [posX, posY, rect];
-    const posXY = { posX: posX, posY: posY, rect: rect };
+    const posXY = [posX, posY, rect];
+    // const posXY = { posX: posX, posY: posY, rect: rect };
     return posXY;
   };
 
@@ -140,8 +140,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
     console.log("found Character");
     console.log(foundChar);
     if (foundChar) {
-      const correctX = posXY[0] >= foundChar.posXY[0][0] && posXY[0] <= foundChar.posXY[0][1];
-      const correctY = posXY[1] >= foundChar.posXY[1][0] && posXY[1] <= foundChar.posXY[1][1];
+      const correctX = posXY[0] >= foundChar.posX[0] && posXY[0] <= foundChar.posX[1];
+      const correctY = posXY[1] >= foundChar.posX[0] && posXY[1] <= foundChar.posX[1];
       if (correctX && correctY) {
         return true;
       }
