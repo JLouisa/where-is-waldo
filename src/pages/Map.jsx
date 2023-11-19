@@ -12,6 +12,7 @@ import { ACTION } from "../state/reducer";
 import processor from "../utils/processCharacter";
 import useFetch from "../hooks/useFetch";
 import useGlobalStore from "../state/useGlobalStore";
+import loadingImg from "../assets/tail-spin.svg";
 
 function Map({ state, dispatch, characters, setCharacters }) {
   const [loading, setLoading] = useState(true);
@@ -64,12 +65,11 @@ function Map({ state, dispatch, characters, setCharacters }) {
     const map = document.querySelector(".rickMortyMap");
     const rect = map.getBoundingClientRect();
     const e = window.event;
-    const posX = e.clientX;
-    const posY = e.clientY;
+    const posX = e.clientX - rect.x - 40;
+    const posY = e.clientY - rect.y - 40;
     console.log(`PosX, PosY`);
     console.log(`PosX: ${posX}, PosY: ${posY}`);
-    const posXY = [posX, posY, rect];
-    // const posXY = { posX: posX, posY: posY, rect: rect };
+    const posXY = { posX: posX, posY: posY, rect: rect };
     return posXY;
   };
 
@@ -88,12 +88,12 @@ function Map({ state, dispatch, characters, setCharacters }) {
 
   const addMark = () => {
     const markXY = getPosXY();
-    const obj = {
+    const theMark = {
       markXY: markXY,
       iconImg: loadingIcon,
     };
-    setPosXY(markXY);
-    setClickArr([...clickArr, obj]);
+    setPosXY(theMark);
+    setClickArr([...clickArr, theMark]);
   };
 
   const cancelAddMark = () => {
@@ -106,19 +106,19 @@ function Map({ state, dispatch, characters, setCharacters }) {
 
   const ChooseCharacterHandler = (index) => {
     if (scoreRef.current < 3) {
-      const newArr = [...characters];
-      sendToServer(newArr[index], newArr, index);
+      const charArr = [...characters];
+      processorMark(charArr[index], charArr, index);
     }
   };
 
-  const sendToServer = (item, arr, index) => {
-    const proccessed = proccessOnServer(item, posXY);
-    if (proccessed) {
+  const processorMark = (item, charArr, index) => {
+    const theMarkXY = processorChosen(item, posXY);
+    if (theMarkXY) {
       const newArr = [...clickArr];
       newArr[clickArr.length - 1].iconImg = checkedIcon;
       setClickArr(newArr);
-      arr.splice(index, 1);
-      setCharacters(arr);
+      charArr.splice(index, 1);
+      setCharacters(charArr);
       scoreRef.current++;
     } else {
       const newArr = [...clickArr];
@@ -133,15 +133,15 @@ function Map({ state, dispatch, characters, setCharacters }) {
     }
   };
 
-  const proccessOnServer = (item, posXY) => {
+  const processorChosen = (item, _posXY) => {
     const foundChar = characters.find((char) => {
       return char.name === item.name;
     });
     console.log("found Character");
     console.log(foundChar);
     if (foundChar) {
-      const correctX = posXY[0] >= foundChar.posX[0] && posXY[0] <= foundChar.posX[1];
-      const correctY = posXY[1] >= foundChar.posX[0] && posXY[1] <= foundChar.posX[1];
+      const correctX = _posXY[0] >= foundChar.posX[0] && _posXY[0] <= foundChar.posX[1];
+      const correctY = _posXY[1] >= foundChar.posX[0] && _posXY[1] <= foundChar.posX[1];
       if (correctX && correctY) {
         return true;
       }
@@ -161,8 +161,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
   const calculateMenuStyle = () => {
     return {
       position: "absolute",
-      left: `${posXY[0]}px`,
-      top: `${posXY[1] - posXY[2].y + 30 - 40}px`,
+      left: `${posXY.markXY.posX + 40 + 30}px`,
+      top: `${posXY.markXY.posY + 30}px`,
     };
   };
 
@@ -170,8 +170,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
   const calculateIconStyle = (click) => {
     return {
       position: "absolute",
-      left: `${click.markXY[0] - click.markXY[2].x - 40}px`,
-      top: `${click.markXY[1] - click.markXY[2].y - 40}px`,
+      left: `${click.markXY.posX}px`,
+      top: `${click.markXY.posY}px`,
     };
   };
 
@@ -210,11 +210,11 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return errorMap;
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <img style={centerDivStyle} src={loadingImg} alt="Loading Icon"></img>;
 
   return (
     <section>
-      <figure className="mapContainer">
+      <div className="mapContainer">
         {/* Map */}
         <img
           src={mapChosen()}
@@ -235,8 +235,8 @@ function Map({ state, dispatch, characters, setCharacters }) {
           />
         ))}
         {/* Character Menu */}
-        {showMenu && posXY.length > 0 && (
-          <figcaption className="chooseDiv" style={calculateMenuStyle()}>
+        {showMenu && (
+          /*posXY.length > 0 &&*/ <div className="chooseDiv" style={calculateMenuStyle()}>
             {characters.map((character, index) => (
               <div
                 className="characterDiv"
@@ -249,9 +249,9 @@ function Map({ state, dispatch, characters, setCharacters }) {
                 <span>{character.name}</span>
               </div>
             ))}
-          </figcaption>
+          </div>
         )}
-      </figure>
+      </div>
     </section>
   );
 }
@@ -276,3 +276,7 @@ export default Map;
 
 //   // Your logic using percentage coordinates
 // };
+
+const centerDivStyle = {
+  textAlign: "center",
+};
