@@ -22,6 +22,7 @@ function Map({ state, dispatch, characters, setCharacters }) {
   const [clickArr, setClickArr] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
   const [posXY, setPosXY] = useState([]);
+  const [menuPosXY, setMenuPosXY] = useState([]);
   const clickedRef = useRef(0);
   const scoreRef = useRef(0);
   const { processCharacter } = processor();
@@ -61,25 +62,32 @@ function Map({ state, dispatch, characters, setCharacters }) {
   }, [gameOver, navigateTo]);
 
   // Working;
-  const getPosXY = () => {
+  const getMarkPosXY = (offX = 0, offY = 0) => {
     const map = document.querySelector(".rickMortyMap");
     const rect = map.getBoundingClientRect();
     const e = window.event;
-    const posX = e.clientX - rect.x - 40;
-    const posY = e.clientY - rect.y - 40;
-    console.log(`PosX, PosY`);
-    console.log(`PosX: ${posX}, PosY: ${posY}`);
-    const posXY = { posX: posX, posY: posY, rect: rect };
-    return posXY;
+    const posX = e.clientX - rect.x - 40 + offX;
+    const posY = e.clientY - rect.y - 40 + offY;
+    const posXTarget = ((posX / rect.width) * 100).toFixed(0);
+    const posYTarget = ((posY / rect.height) * 100).toFixed(0);
+    const _posXY = { posX: posXTarget, posY: posYTarget, rect: rect };
+    return _posXY;
   };
 
   const addMark = () => {
-    const markXY = getPosXY();
+    const markXY = getMarkPosXY();
+    console.log(`PosX: ${markXY.posX}, PosY: ${markXY.posY}`);
+    const menuXY = getMarkPosXY(70, 40);
     const theMark = {
       markXY: markXY,
       iconImg: loadingIcon,
     };
+    const theMenu = {
+      markXY: menuXY,
+      iconImg: loadingIcon,
+    };
     setPosXY(theMark);
+    setMenuPosXY(theMenu);
     setClickArr([...clickArr, theMark]);
   };
 
@@ -100,6 +108,7 @@ function Map({ state, dispatch, characters, setCharacters }) {
 
   const processorMark = (item, charArr, index) => {
     const theMarkXY = processorChosen(item, posXY);
+
     if (theMarkXY) {
       const newArr = [...clickArr];
       newArr[clickArr.length - 1].iconImg = checkedIcon;
@@ -124,11 +133,11 @@ function Map({ state, dispatch, characters, setCharacters }) {
     const foundChar = characters.find((char) => {
       return char.name === item.name;
     });
-    console.log("found Character");
-    console.log(foundChar);
+
     if (foundChar) {
-      const correctX = _posXY[0] >= foundChar.posX[0] && _posXY[0] <= foundChar.posX[1];
-      const correctY = _posXY[1] >= foundChar.posX[0] && _posXY[1] <= foundChar.posX[1];
+      const correctX = _posXY.markXY.posX >= foundChar.posX[0] && _posXY.markXY.posX <= foundChar.posX[1];
+      const correctY = _posXY.markXY.posY >= foundChar.posY[0] && _posXY.markXY.posY <= foundChar.posY[1];
+
       if (correctX && correctY) {
         return true;
       }
@@ -137,32 +146,19 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return false;
   };
 
-  //   const posXpct = ((event.clientX - rect.x) / rect.width) * 100;
-  //   const posYpct = ((event.clientY - rect.y) / rect.height) * 100;
+  const calculateIconStyle = (click) => {
+    return {
+      position: "absolute",
+      left: click.markXY.posX + "%",
+      top: click.markXY.posY + "%",
+    };
+  };
 
   const calculateMenuStyle = () => {
     return {
       position: "absolute",
-      left: `${((posXY.markXY.posX + 40 + 30) / posXY.markXY.rect.width) * 100}%`,
-      top: `${((posXY.markXY.posY + 30) / posXY.markXY.rect.height) * 100}%`,
-    };
-  };
-
-  // (working)
-  // const calculateMenuStyle = () => {
-  //   return {
-  //     position: "absolute",
-  //     left: `${posXY.markXY.posX + 40 + 30}px`,
-  //     top: `${posXY.markXY.posY + 30}px`,
-  //   };
-  // };
-
-  // (Working)
-  const calculateIconStyle = (click) => {
-    return {
-      position: "absolute",
-      left: `${(click.markXY.posX / posXY.markXY.rect.width) * 100}%`,
-      top: `${(click.markXY.posY / posXY.markXY.rect.height) * 100}%`,
+      left: menuPosXY.markXY.posX + "%",
+      top: menuPosXY.markXY.posY + "%",
     };
   };
 
@@ -256,17 +252,6 @@ Map.propTypes = {
 };
 
 export default Map;
-
-// Here's a simple example using percentage coordinates:
-// const handleMouseClick = (event) => {
-//   const container = document.querySelector('.map');
-//   const rect = container.getBoundingClientRect();
-
-//   const posXpct = ((event.clientX - rect.x) / rect.width) * 100;
-//   const posYpct = ((event.clientY - rect.y) / rect.height) * 100;
-
-//   // Your logic using percentage coordinates
-// };
 
 const centerDivStyle = {
   textAlign: "center",
