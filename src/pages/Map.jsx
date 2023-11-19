@@ -73,19 +73,6 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return posXY;
   };
 
-  // const getPosXY = () => {
-  //   const map = document.querySelector(".rickMortyMap");
-  //   const rect = map.getBoundingClientRect();
-
-  //   const e = window.event;
-  //   const posX = ((e.clientX - rect.x) / rect.width) * 100;
-  //   const posY = ((e.clientY - rect.y) / rect.height) * 100;
-  //   console.log(`PosX, PosY`);
-  //   console.log(`PosX: ${posX}, PosY: ${posY}`);
-  //   const posXY = [posX, posY, rect];
-  //   return posXY;
-  // };
-
   const addMark = () => {
     const markXY = getPosXY();
     const theMark = {
@@ -150,28 +137,32 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return false;
   };
 
-  // const calculateIconStyle = (clickedCharacter) => {
-  //   return {
-  //     position: "absolute",
-  //     left: `${clickedCharacter.markXY[0] - 40}%`,
-  //     top: `${clickedCharacter.markXY[1] - 40}%`,
-  //   };
-  // };
+  //   const posXpct = ((event.clientX - rect.x) / rect.width) * 100;
+  //   const posYpct = ((event.clientY - rect.y) / rect.height) * 100;
 
   const calculateMenuStyle = () => {
     return {
       position: "absolute",
-      left: `${posXY.markXY.posX + 40 + 30}px`,
-      top: `${posXY.markXY.posY + 30}px`,
+      left: `${((posXY.markXY.posX + 40 + 30) / posXY.markXY.rect.width) * 100}%`,
+      top: `${((posXY.markXY.posY + 30) / posXY.markXY.rect.height) * 100}%`,
     };
   };
+
+  // (working)
+  // const calculateMenuStyle = () => {
+  //   return {
+  //     position: "absolute",
+  //     left: `${posXY.markXY.posX + 40 + 30}px`,
+  //     top: `${posXY.markXY.posY + 30}px`,
+  //   };
+  // };
 
   // (Working)
   const calculateIconStyle = (click) => {
     return {
       position: "absolute",
-      left: `${click.markXY.posX}px`,
-      top: `${click.markXY.posY}px`,
+      left: `${(click.markXY.posX / posXY.markXY.rect.width) * 100}%`,
+      top: `${(click.markXY.posY / posXY.markXY.rect.height) * 100}%`,
     };
   };
 
