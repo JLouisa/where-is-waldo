@@ -2,9 +2,11 @@ import formattedDate from "../utils/formattedDate";
 // import { leaderboardArr } from "../database/fakeDB";
 import { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
+import Loading from "../components/Loading";
+import { Link } from "react-router-dom";
 
 function Leaderboard() {
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboard, setLeaderboard] = useState(0);
   const { getFetch } = useFetch();
 
   useEffect(() => {
@@ -16,77 +18,50 @@ function Leaderboard() {
     return setLeaderboard([]);
   }, []);
 
-  if (leaderboard.length === 0) return <div>Loading...</div>;
+  const theLeaderboard = () => {
+    return (
+      <>
+        {leaderboard.map((theMap) => {
+          return (
+            <div key={theMap.name}>
+              <h2 style={h2Style}>{theMap.name}</h2>
+              <ol>
+                {theMap.map.length > 0
+                  ? theMap.map.map((player) => {
+                      return (
+                        <li className="playerCards" style={playerCardsStyle} key={player._id}>
+                          <p>
+                            Player: <strong>{player.player}</strong>
+                          </p>
+                          <p>Score: {player.score}s</p>
+                          <p>Date: {formattedDate(player.createdDate)}</p>
+                        </li>
+                      );
+                    })
+                  : "Be the first the beat the level"}
+              </ol>
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
+  if (leaderboard === 0 || leaderboard === undefined) return <Loading />;
 
   return (
-    <div className="leaderboardInfo" style={leaderboardInfoStyle}>
-      <div>
-        {leaderboard && leaderboard.length > 0 && leaderboard[2] !== undefined ? (
-          <>
-            <h2 style={h2Style}>Disney Waldo</h2>
-            <ol>
-              {leaderboard[2].map((player) => {
-                return (
-                  <li className="playerCards" style={playerCardsStyle} key={player._id}>
-                    <p>
-                      Player: <strong>{player.player}</strong>
-                    </p>
-                    <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.createdDate)}</p>
-                  </li>
-                );
-              })}
-            </ol>
-          </>
-        ) : (
-          "Be the first the beat the level"
-        )}
+    <>
+      <div style={h2Style}>
+        <Link to="/home">
+          <button className="btn" style={h2Style}>
+            Play a game
+          </button>
+        </Link>
       </div>
-      <div>
-        {leaderboard.length > 0 && leaderboard[1] !== undefined ? (
-          <>
-            <h2 style={h2Style}>Pokemon Waldo</h2>
-            <ol>
-              {leaderboard[1].map((player) => {
-                return (
-                  <li className="playerCards" style={playerCardsStyle} key={player._id}>
-                    <p>
-                      Player: <strong>{player.player}</strong>
-                    </p>
-                    <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.createdDate)}</p>
-                  </li>
-                );
-              })}
-            </ol>
-          </>
-        ) : (
-          "Be the first the beat the level"
-        )}
+      <div className="leaderboardInfo" style={leaderboardInfoStyle}>
+        {theLeaderboard()}
       </div>
-      <div>
-        {leaderboard.length > 0 && leaderboard[0] !== undefined ? (
-          <>
-            <h2 style={h2Style}>Rick & Morty Waldo</h2>
-            <ol>
-              {leaderboard[0].map((player) => {
-                return (
-                  <li className="playerCards" style={playerCardsStyle} key={player._id}>
-                    <p>
-                      Player: <strong>{player.player}</strong>
-                    </p>
-                    <p>Score: {player.score}s</p>
-                    <p>Date: {formattedDate(player.createdDate)}</p>
-                  </li>
-                );
-              })}
-            </ol>
-          </>
-        ) : (
-          "Be the first the beat the level"
-        )}{" "}
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -94,9 +69,8 @@ export default Leaderboard;
 
 const leaderboardInfoStyle = {
   display: "flex",
-  // flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
+  // alignItems: "center",
 };
 
 const playerCardsStyle = {

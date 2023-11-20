@@ -24,22 +24,23 @@ function ScoreForm({ state }) {
 
     console.log(leaderboard);
     const response = await postFetch("/leaderboard", leaderboard);
-    console.log(response);
     setLoadingMsg(response.data);
-    setTimeout(() => {
-      setGetTime(0);
-      setDone(true);
-    }, 750);
+    if (response.data.ok === "ok") {
+      setTimeout(() => {
+        setGetTime(0);
+        setDone(true);
+      }, 750);
+    }
   };
 
   useEffect(() => {
     if (state.gameGenre === "home") {
-      navigateTo("/leaderboard");
+      navigateTo("/home");
     }
   });
 
   useEffect(() => {
-    if (done) navigateTo("/home");
+    if (done) navigateTo("/leaderboard");
     return () => setDone(false);
   }, [done, navigateTo]);
 

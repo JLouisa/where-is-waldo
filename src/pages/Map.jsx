@@ -12,7 +12,7 @@ import { ACTION } from "../state/reducer";
 import processor from "../utils/processCharacter";
 import useFetch from "../hooks/useFetch";
 import useGlobalStore from "../state/useGlobalStore";
-import loadingImg from "../assets/tail-spin.svg";
+import Loading from "../components/Loading";
 
 function Map({ state, dispatch, characters, setCharacters }) {
   const [loading, setLoading] = useState(true);
@@ -200,7 +200,7 @@ function Map({ state, dispatch, characters, setCharacters }) {
     return errorMap;
   };
 
-  if (loading) return <img style={centerDivStyle} src={loadingImg} alt="Loading Icon"></img>;
+  if (loading) return <Loading />;
 
   return (
     <section>
@@ -256,6 +256,6 @@ Map.propTypes = {
 
 export default Map;
 
-const centerDivStyle = {
-  textAlign: "center",
-};
+// const centerDivStyle = {
+//   textAlign: "center",
+// };

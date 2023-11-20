@@ -18,51 +18,41 @@ function Home({ dispatch }) {
     setGetTime(0);
   }, []);
 
+  const showIcons = () => {
+    const disneyMap = { theState: ACTION.MAPDISNEY, icon: disneyIcon, theAlt: "Disney icon" };
+    const ricAndMortyMap = { theState: ACTION.MAPRM, icon: rickMortyIcon, theAlt: "Rick and Morty black icon" };
+    const pokemonMap = { theState: ACTION.MAPPOKE, icon: pokemonIcon, theAlt: "Pokemon icon" };
+
+    const theMaps = [disneyMap, ricAndMortyMap, pokemonMap];
+    return (
+      <>
+        {theMaps.map((map) => {
+          return (
+            <>
+              <div className="mapCardIcons">
+                <img src={map.icon} alt={map.theAlt} className="mapIcons"></img>
+                <Link to="/map">
+                  {/*Needs to change*/}
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      startTheGame(map.theState);
+                    }}
+                  >
+                    Play
+                  </button>
+                </Link>
+              </div>
+            </>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <div className="theChoiceMain">
-      <div className="mapChooseDiv">
-        <div className="mapCardIcons">
-          <img src={disneyIcon} alt="Disney icon" className="mapIcons"></img>
-          <Link to="/map">
-            {/*Needs to change*/}
-            <button
-              className="btn"
-              onClick={() => {
-                startTheGame(ACTION.MAPDISNEY);
-              }}
-            >
-              Play
-            </button>
-          </Link>
-        </div>
-        <div className="mapCardIcons">
-          <img src={pokemonIcon} alt="Pokemon icon" className="mapIcons"></img>
-          <Link to="/map">
-            {/*Needs to change*/}
-            <button
-              className="btn"
-              onClick={() => {
-                startTheGame(ACTION.MAPPOKE);
-              }}
-            >
-              Play
-            </button>
-          </Link>
-        </div>
-        <div className="mapCardIcons">
-          <img src={rickMortyIcon} alt="Rick and Morty black icon" className="mapIcons"></img>
-          <Link to="/map">
-            <button
-              className="btn"
-              onClick={() => {
-                startTheGame(ACTION.MAPRM);
-              }}
-            >
-              Play
-            </button>
-          </Link>
-        </div>
-      </div>
+      <div className="mapChooseDiv">{showIcons()}</div>
     </div>
   );
 }

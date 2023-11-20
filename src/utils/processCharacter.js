@@ -60,7 +60,7 @@ const processor = () => {
     "Homer Simpson": homerImg,
     Kermit: kermitImg,
     Simba: simbaImg,
-    "Mrs. RefrigeratorImg": mrsRefrigeratorImg,
+    "Mrs. Refrigerator": mrsRefrigeratorImg,
     Morty: mortyImg,
     "Ballon Dog": ballonDogImg,
     Rick: rickImg,
