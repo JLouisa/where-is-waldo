@@ -34,7 +34,7 @@ function ScoreForm({ state }) {
 
   useEffect(() => {
     if (state.gameGenre === "home") {
-      navigateTo("/home");
+      navigateTo("/leaderboard");
     }
   });
 

@@ -10,11 +10,6 @@ function Leaderboard() {
   useEffect(() => {
     const getLeaderboard = async () => {
       const data = await getFetch("/leaderboard");
-      console.log("data");
-      console.log(data);
-      console.log(data[0]);
-      console.log(data[1]);
-      console.log(data[2]);
       setLeaderboard(data);
     };
     getLeaderboard();

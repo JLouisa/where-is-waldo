@@ -68,15 +68,18 @@ function Map({ state, dispatch, characters, setCharacters }) {
     const e = window.event;
     const posX = e.clientX - rect.x - 40 + offX;
     const posY = e.clientY - rect.y - 40 + offY;
-    const posXTarget = ((posX / rect.width) * 100).toFixed(0);
-    const posYTarget = ((posY / rect.height) * 100).toFixed(0);
+    let posXTarget = ((posX / rect.width) * 100).toFixed(0);
+    let posYTarget = ((posY / rect.height) * 100).toFixed(0);
+    if (offX && posXTarget > 95) posXTarget = 85;
+    if (offY && posYTarget > 95) posYTarget = 75;
     const _posXY = { posX: posXTarget, posY: posYTarget, rect: rect };
     return _posXY;
   };
 
   const addMark = () => {
     const markXY = getMarkPosXY();
-    console.log(`PosX: ${markXY.posX}, PosY: ${markXY.posY}`);
+    // console.log(`PosX: ${markXY.posX}, PosY: ${markXY.posY}`);
+    // const menuXY = getMarkPosXY();
     const menuXY = getMarkPosXY(70, 40);
     const theMark = {
       markXY: markXY,
