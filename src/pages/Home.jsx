@@ -19,9 +19,14 @@ function Home({ dispatch }) {
   }, []);
 
   const showIcons = () => {
-    const disneyMap = { theState: ACTION.MAPDISNEY, icon: disneyIcon, theAlt: "Disney icon" };
-    const ricAndMortyMap = { theState: ACTION.MAPRM, icon: rickMortyIcon, theAlt: "Rick and Morty black icon" };
-    const pokemonMap = { theState: ACTION.MAPPOKE, icon: pokemonIcon, theAlt: "Pokemon icon" };
+    const disneyMap = { theState: ACTION.MAPDISNEY, icon: disneyIcon, theAlt: "Disney icon", difficulty: "Easy" };
+    const ricAndMortyMap = {
+      theState: ACTION.MAPRM,
+      icon: rickMortyIcon,
+      theAlt: "Rick and Morty black icon",
+      difficulty: "Medium",
+    };
+    const pokemonMap = { theState: ACTION.MAPPOKE, icon: pokemonIcon, theAlt: "Pokemon icon", difficulty: "Hard" };
 
     const theMaps = [disneyMap, ricAndMortyMap, pokemonMap];
     return (
@@ -31,8 +36,8 @@ function Home({ dispatch }) {
             <>
               <div className="mapCardIcons">
                 <img src={map.icon} alt={map.theAlt} className="mapIcons"></img>
+                <span style={colorStyle(difficultyStyle[map.difficulty])}>{map.difficulty}</span>
                 <Link to="/map">
-                  {/*Needs to change*/}
                   <button
                     className="btn"
                     onClick={() => {
@@ -65,3 +70,15 @@ Home.propTypes = {
 };
 
 export default Home;
+
+const colorStyle = (level) => {
+  return {
+    color: level,
+  };
+};
+
+const difficultyStyle = {
+  Easy: "green",
+  Medium: "orange",
+  Hard: "red",
+};
