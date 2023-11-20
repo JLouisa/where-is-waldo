@@ -15,52 +15,18 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%; */
 }
-/*
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}*/
-
-/* body {
-  position: relative;
-  margin: 0;
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  min-width: 320px; 
-  min-height: 100vh;
-} */
 
 h1 {
   font-size: 2rem;
   line-height: 1.1;
 }
 
-/* button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-} */
-
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -71,7 +37,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-} */
+}
 /*! ================Nav================ */
 
 .nav1 {
@@ -233,29 +199,8 @@ main {
   height: 3rem;
 }
 
-/* .selectIcon {
-  transition: transform ease;
-  animation: icon-spin infinite 20s linear;
-}
-
-@keyframes icon-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .selectIcon {
-    animation: none;
-  }
-} */
 /* ==============map============== */
 .mapContainer {
-  /* background-color: #fff; */
-  /* z-index: 100; */
   position: relative;
   user-select: "none";
 }
@@ -268,22 +213,6 @@ main {
   justify-content: center;
   align-items: center;
 }
-
-/* =================Leaderboard================= */
-/* .leaderboardInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.playerCards {
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 0.5em;
-  margin: 1em;
-  padding: 1em 2em;
-} */
 
 /*! ================Footer================ */
 footer {
@@ -315,9 +244,3 @@ footer {
 .btn:hover {
   background-color: #0056b3;
 }
-
-/* body {
-  -webkit-user-select: none;
-  -ms-user-select: none; 
-  user-select: none;
-} */
